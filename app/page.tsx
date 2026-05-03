@@ -1,8 +1,8 @@
-import { Bell, Calendar, ExternalLink } from 'lucide-react';
+import { Bell, Calendar, ExternalLink, Users, ShieldCheck, CheckCircle, MessageCircle } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-stone-50 text-gray-900">
       {/* Header */}
       <header className="bg-blue-600 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
