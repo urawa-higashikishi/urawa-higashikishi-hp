@@ -1,13 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart } from 'lucide-react';
+import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X } from 'lucide-react';
 
 export default function Home() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const faqs = [
@@ -28,8 +33,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-amber-50">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-lg border-b border-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-lg border-b border-orange-100 w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-5">
             <div className="flex items-center">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-100 text-orange-600 shadow-sm">
@@ -39,12 +44,49 @@ export default function Home() {
             </div>
             <nav className="hidden md:flex space-x-8 text-slate-600">
               <a href="#about" className="hover:text-orange-600 transition">自治会紹介</a>
-              <a href="#benefits" className="hover:text-orange-600 transition">メリット</a>
               <a href="#news" className="hover:text-orange-600 transition">お知らせ</a>
               <a href="#events" className="hover:text-orange-600 transition">行事予定</a>
-              <a href="#faq" className="hover:text-orange-600 transition">Q&A</a>
+              <a href="#benefits" className="hover:text-orange-600 transition">入会メリット</a>
+              <a href="#faq" className="hover:text-orange-600 transition">よくある質問</a>
               <a href="#map" className="hover:text-orange-600 transition">アクセス</a>
             </nav>
+            {/* 右側：モバイル用メニューボタン */}
+            <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMobileMenu}
+              className="z-50 p-2"
+            >
+              {/* ボタンのアイコン切り替え */}
+                  {mobileMenuOpen ? (
+                   <X size={28} className="text-orange-600" />
+                   ) : (
+                      <Menu size={28} className="text-orange-600" />
+                   )}
+              </button>
+              {mobileMenuOpen && (
+                <div className="md:hidden fixed inset-x-0 top-[72px] bg-white border-b border-orange-100 shadow-2xl z-40 animate-in fade-in slide-in-from-top-5 duration-300">
+                  <nav className="flex flex-col p-6 space-y-2">
+                    {[
+                      { name: "自治会紹介", href: "#about" },
+                      { name: "お知らせ", href: "#news" },
+                      { name: "行事予定", href: "#events" },
+                      { name: "入会メリット", href: "#benefits" },
+                      { name: "よくある質問", href: "#faq" },
+                      { name: "アクセス", href: "#map" },
+                    ].map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)} // クリックしたら閉じる
+                        className="text-lg font-medium text-slate-700 hover:text-orange-600 py-4 border-b border-slate-50 last:border-0"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -114,54 +156,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* メリット */}
-      <section id="benefits" className="py-16 bg-amber-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会するメリット</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Shield className="h-7 w-7" />
-                </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">安全・安心</h4>
-                <p className="text-slate-600">防犯活動により、地域の安心を守ります。</p>
-              </div>
-              <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Heart className="h-7 w-7" />
-                </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">コミュニティ</h4>
-                <p className="text-slate-600">住民同士のつながりを深め、助け合いを育みます。</p>
-              </div>
-              <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Users className="h-7 w-7" />
-                </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">イベント参加</h4>
-                <p className="text-slate-600">様々な行事に参加し、充実した時間を過ごせます。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* お知らせ＆PDF */}
-      <section id="news" className="py-16">
+      <section id="news" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の最新情報</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">最新のお知らせ</h3>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-8">
               <div className="bg-slate-50 p-10 rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     <Bell className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-semibold text-slate-900">お知らせ</h4>
-                    <p className="text-slate-500">最新の地域情報をお届けします。</p>
+                    <h4 className="text-xl font-semibold text-slate-900">お知らせリスト</h4>
+                    <p className="text-slate-500">最新の地域情報を縦にご紹介します。</p>
                   </div>
                 </div>
                 <ul className="space-y-3 text-slate-600">
@@ -176,17 +185,50 @@ export default function Home() {
                     <Download className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-semibold text-slate-900">自治会便り</h4>
-                    <p className="text-slate-500">PDFでいつでもご覧いただけます。</p>
+                    <h4 className="text-xl font-semibold text-slate-900">最新の自治会便り</h4>
+                    <p className="text-slate-500">PDFプレビューをご確認ください。</p>
                   </div>
                 </div>
-                <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-200">
-                  <img src="/urawa-higashikishi-hp/newsletter-thumb.jpg" alt="自治会便りプレビュー" className="w-full h-52 object-cover" />
+                <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-200 shadow-2xl mx-auto max-w-4xl">
+                  <img src="/urawa-higashikishi-hp/newsletter.jpg" alt="自治会便りプレビュー" className="w-full h-auto object-cover" />
                 </div>
                 <p className="text-slate-600 mb-6">最新号の自治会便りをダウンロードして、活動情報をチェックしましょう。</p>
                 <button className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-white font-semibold shadow-lg hover:bg-orange-600 transition">
                   PDFダウンロード
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* メリット */}
+      <section id="benefits" className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
+            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会するメリット</h3>
+            <div className="space-y-8">
+              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
+                  <Shield className="h-7 w-7" />
+                </div>
+                <h4 className="text-xl font-semibold text-slate-900 mb-2">安全・安心</h4>
+                <p className="text-slate-600">防犯活動により、地域の安心を守ります。</p>
+              </div>
+              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
+                  <Heart className="h-7 w-7" />
+                </div>
+                <h4 className="text-xl font-semibold text-slate-900 mb-2">コミュニティ</h4>
+                <p className="text-slate-600">住民同士のつながりを深め、助け合いを育みます。</p>
+              </div>
+              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
+                  <Users className="h-7 w-7" />
+                </div>
+                <h4 className="text-xl font-semibold text-slate-900 mb-2">イベント参加</h4>
+                <p className="text-slate-600">様々な行事に参加し、充実した時間を過ごせます。</p>
               </div>
             </div>
           </div>
