@@ -181,7 +181,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-200">
-                  <img src="/newsletter-thumb.jpg" alt="自治会便りプレビュー" className="w-full h-52 object-cover" />
+                  <img src="/urawa-higashikishi-hp/newsletter-thumb.jpg" alt="自治会便りプレビュー" className="w-full h-52 object-cover" />
                 </div>
                 <p className="text-slate-600 mb-6">最新号の自治会便りをダウンロードして、活動情報をチェックしましょう。</p>
                 <button className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-white font-semibold shadow-lg hover:bg-orange-600 transition">
