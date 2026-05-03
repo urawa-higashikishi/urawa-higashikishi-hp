@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-amber-50">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-lg border-b border-slate-200">
+      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-lg border-b border-orange-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-5">
             <div className="flex items-center">
@@ -115,28 +115,28 @@ export default function Home() {
       </section>
 
       {/* メリット */}
-      <section id="benefits" className="py-16 bg-slate-50">
+      <section id="benefits" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会するメリット</h3>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sky-100 text-sky-600 shadow-sm">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
                   <Shield className="h-7 w-7" />
                 </div>
                 <h4 className="text-xl font-semibold text-slate-900 mb-2">安全・安心</h4>
                 <p className="text-slate-600">防犯活動により、地域の安心を守ります。</p>
               </div>
               <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sky-100 text-sky-600 shadow-sm">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
                   <Heart className="h-7 w-7" />
                 </div>
                 <h4 className="text-xl font-semibold text-slate-900 mb-2">コミュニティ</h4>
                 <p className="text-slate-600">住民同士のつながりを深め、助け合いを育みます。</p>
               </div>
               <div className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sky-100 text-sky-600 shadow-sm">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
                   <Users className="h-7 w-7" />
                 </div>
                 <h4 className="text-xl font-semibold text-slate-900 mb-2">イベント参加</h4>
@@ -156,7 +156,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-slate-50 p-10 rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 text-sky-600 mr-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     <Bell className="h-6 w-6" />
                   </div>
                   <div>
@@ -172,7 +172,7 @@ export default function Home() {
               </div>
               <div className="bg-slate-50 p-10 rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 text-sky-600 mr-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     <Download className="h-6 w-6" />
                   </div>
                   <div>
@@ -194,14 +194,14 @@ export default function Home() {
       </section>
 
       {/* 行事予定 */}
-      <section id="events" className="py-16 bg-slate-50">
+      <section id="events" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
                 <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-blue-600 mr-2" />
+                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
                   <h4 className="text-lg font-semibold text-slate-900">秋祭り</h4>
                 </div>
                 <p className="text-slate-600">日時: 10月15日 10:00-16:00</p>
@@ -209,7 +209,7 @@ export default function Home() {
               </div>
               <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
                 <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-blue-600 mr-2" />
+                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
                   <h4 className="text-lg font-semibold text-slate-900">防犯パトロール</h4>
                 </div>
                 <p className="text-slate-600">日時: 毎週土曜日 9:00-11:00</p>
@@ -217,7 +217,7 @@ export default function Home() {
               </div>
               <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
                 <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-blue-600 mr-2" />
+                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
                   <h4 className="text-lg font-semibold text-slate-900">新年会</h4>
                 </div>
                 <p className="text-slate-600">日時: 1月10日 18:00-20:00</p>
@@ -243,7 +243,7 @@ export default function Home() {
                     <div className="flex justify-between items-center">
                       <h4 className="text-lg font-semibold text-slate-900">{faq.question}</h4>
                       <ChevronDown
-                        className={`h-5 w-5 text-slate-600 transform transition-transform ${
+                        className={`h-5 w-5 text-orange-500 transform transition-transform ${
                           openFAQ === index ? 'rotate-180' : ''
                         }`}
                       />
@@ -262,12 +262,12 @@ export default function Home() {
       </section>
 
       {/* 地図 */}
-      <section id="map" className="py-16 bg-slate-50">
+      <section id="map" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
             <div className="flex items-center justify-center mb-4">
-              <MapPin className="h-6 w-6 text-blue-600 mr-2" />
+              <MapPin className="h-6 w-6 text-orange-600 mr-2" />
               <p className="text-slate-600">浦和東岸自治会集会所</p>
             </div>
             <div className="overflow-hidden rounded-3xl">
@@ -285,7 +285,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-800 text-white py-8">
+      <footer className="bg-orange-950 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
