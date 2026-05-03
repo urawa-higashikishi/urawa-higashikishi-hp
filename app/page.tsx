@@ -272,7 +272,7 @@ export default function Home() {
             </div>
             <div className="overflow-hidden rounded-3xl">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.828!2d139.6917!3d35.8625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018e1b5c1b1b1b1%3A0x1b1b1b1b1b1b1b1b!2sUrawa!5e0!3m2!1sen!2sjp!4v1633072800000!5m2!1sen!2sjp"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.7070591003076!2d139.66134449999998!3d35.85618600000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ea9ac6828feb%3A0x5b94fd0e08fe1a6c!2z5p2x5bK455S66Ieq5rK75Lya!5e0!3m2!1sja!2sjp!4v1777809319029!5m2!1sja!2sjp"
                 width="100%"
                 height="420"
                 style={{ border: 0 }}
