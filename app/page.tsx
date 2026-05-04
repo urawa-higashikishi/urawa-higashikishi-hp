@@ -1,10 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X } from 'lucide-react';
 import Image from 'next/image'; 
 
 export default function Home() {
+    // スクロール位置を管理する状態
+    const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // 400px以上スクロールしたらボタンを表示
+      setShowTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -53,15 +68,25 @@ export default function Home() {
             {/* 左側：ロゴとサイトタイトル */}
             <div className="flex items-center">
               {/* 作成したロゴを表示 */}
-              <div className="relative w-12 h-12 overflow-hidden rounded-lg shadow-sm border border-slate-200">
+              <div className="relative w-16 h-16 overflow-hidden rounded-lg shadow-sm border border-white/80">
                 <Image 
                   src="/urawa-higashikishi-hp/favicon.png" 
-                  alt="浦和区東岸町自治会 紋章" 
+                  alt="東岸町自治会 紋章" 
                   fill
                   className="object-cover"
                 />
               </div>
-              <h1 className="ml-4 md:text-2xl font-bold text-slate-900 drop-shadow-sm">浦和東岸町自治会</h1>
+              {/* 自治会名と地名のセット */}
+              <div className="flex flex-col justify-between h-14 py-0.5 ml-3">
+                {/* さいたま市浦和区（赤またはオレンジの長丸） */}
+                <span className="w-full bg-red-600 text-white text-xs px-2 py-0.5 rounded-full font-bold tracking-wider shadow-sm text-center flex items-center justify-center">
+                  さいたま市浦和区
+                </span>
+                {/* 自治会名 */}
+                <h1 className="text-2xl font-bold text-slate-900 leading-none drop-shadow-sm whitespace-nowrap">
+                  東岸町自治会
+                </h1>
+              </div>
             </div>
             <nav className="hidden md:flex space-x-6 text-slate-800 font-bold">
               <a href="#about" className="hover:text-orange-700 transition drop-shadow-sm">自治会紹介</a>
@@ -119,7 +144,7 @@ export default function Home() {
             <div className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-orange-100 opacity-80 blur-2xl"></div>
             <p className="relative inline-flex items-center rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700 mb-6">地域のつながりを育む</p>
             <h2 className="relative text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。安全で安心な地域づくり</h2>
-            <p className="relative mx-auto max-w-2xl text-xl text-slate-600 mb-10">住民一人ひとりが支え合う、活気に満ちた浦和東岸町の暮らしを創造します。</p>
+            <p className="relative mx-auto max-w-2xl text-xl text-slate-600 mb-10">住民一人ひとりが支え合う、活気に満ちた東岸町の暮らしを創造します。</p>
             <button className="relative inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-600 transition">
               入会のお問い合わせ
             </button>
@@ -136,11 +161,11 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-10">
               <div className="space-y-6 text-slate-600 leading-relaxed">
                 <p>
-                  浦和東岸町自治会は、浦和東岸町地区の住民が集まり、地域の安全と快適な生活を目的とした組織です。
+                  東岸町自治会は、浦和区東岸町地区の住民が集まり、地域の安全と快適な生活を目的とした組織です。
                   防犯活動、環境美化、コミュニティイベントなどを通じて、みんなで地域を守っています。
                 </p>
                 <p>
-                  会員数は約500世帯。地域の声を反映した活動を行っています。
+                  会員数は790世帯。地域の声を反映した活動を行っています。
                 </p>
               </div>
               <div className="bg-amber-50 p-10 rounded-[2rem] shadow-lg border border-orange-100">
@@ -352,7 +377,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h4 className="text-lg font-semibold mb-4">浦和東岸町自治会</h4>
+              <h4 className="text-lg font-semibold mb-4">東岸町自治会</h4>
               <p className="text-slate-300">地域の安全と快適な生活のために</p>
             </div>
             <div>
@@ -369,10 +394,22 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-slate-700 text-center text-slate-300">
-            <p>&copy; 2026 浦和東岸町自治会. All rights reserved.</p>
+            <p>&copy; 2026 東岸町自治会. All rights reserved.</p>
           </div>
         </div>
       </footer>
+      {/* スクロールトップボタン */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm border border-orange-200 p-3 rounded-2xl shadow-xl hover:bg-white hover:scale-110 transition-all animate-in fade-in slide-in-from-bottom-10 duration-500 group"
+        >
+          <div className="text-orange-500 mb-1 group-hover:-translate-y-1 transition-transform">
+            <ChevronDown size={24} className="rotate-180" />
+          </div>
+          <span className="text-[10px] font-black text-orange-600 tracking-tighter">PAGE TOP</span>
+        </button>
+      )}
     </div>
   );
 }
