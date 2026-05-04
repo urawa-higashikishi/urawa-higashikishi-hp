@@ -14,27 +14,27 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "浦和東岸町自治会 公式サイト",
-    template: "%s | 浦和東岸町自治会"
+    default: "東岸町自治会 公式サイト",
+    template: "%s | 東岸町自治会"
   },
-  description: "さいたま市浦和区・浦和東岸自治会の公式ホームページです。地域の行事、ゴミ収集日、防災情報など、住民の皆様に役立つ情報を発信しています。",
-  keywords: ["浦和東岸町自治会", "自治会", "東岸町", "浦和区", "さいたま市", "防災", "地域活動"],
+  description: "さいたま市浦和区・東岸自治会の公式ホームページです。地域の行事、ゴミ収集日、防災情報など、住民の皆様に役立つ情報を発信しています。",
+  keywords: ["東岸町自治会", "自治会", "東岸町", "浦和区", "さいたま市", "防災", "地域活動"],
   robots: "noindex, nofollow", // これでGoogle等の検索結果に出なくなります（関係者限定公開用）
 
   // LINEやSNSでシェアした時の見栄え（OGP設定）
   openGraph: {
-    title: "浦和東岸町自治会 公式サイト",
-    description: "地域の「安心・安全」をつなぐ、浦和東岸町自治会の公式ページです。",
+    title: "東岸町自治会 公式サイト",
+    description: "地域の「安心・安全」をつなぐ、東岸町自治会の公式ページです。",
     url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/",
-    siteName: "浦和東岸町自治会",
+    siteName: "東岸町自治会",
     locale: "ja_JP",
     type: "website",
     images: [
       {
-        url: "/urawa-higashikishi-hp/favicon.png", // 自治会便りの画像をプレビューに流用
+        url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/header-bg.png", // 自治会便りの画像をプレビューに流用
         width: 1200,
         height: 630,
-        alt: "浦和東岸町自治会",
+        alt: "東岸町自治会",
       },
     ],
   },
