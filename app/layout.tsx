@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/header-bg.png", // 自治会便りの画像をプレビューに流用
+        url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/favicon.png", // 自治会便りの画像をプレビューに流用
         width: 1200,
         height: 630,
         alt: "東岸町自治会",
