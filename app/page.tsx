@@ -229,23 +229,31 @@ export default function Home() {
                   <li>• （仮）防犯パトロールの参加者を募集しています。</li>
                 </ul>
               </div>
-              <div className="bg-slate-50 p-10 rounded-[2rem] shadow-lg border border-slate-200">
+              <div className="bg-slate-50 p-6 md:p-10 rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
+                    {/* アイコンをカレンダーやダウンロードからフォルダ（回覧用）に変更 */}
                     <Download className="h-6 w-6" />
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-slate-900">最新の自治会便り</h4>
-                    <p className="text-slate-500">PDFプレビューをご確認ください。</p>
+                  <div className="text-left">
+                    <h4 className="text-xl font-semibold text-slate-900">デジタル回覧板・自治会便り</h4>
+                    <p className="text-slate-500 text-sm">毎月自動で更新されます。読みたい資料を選んでください。</p>
                   </div>
                 </div>
-                <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-200 shadow-2xl mx-auto max-w-4xl">
-                  <img src="/urawa-higashikishi-hp/newsletter.jpg" alt="自治会便りプレビュー" className="w-full h-auto object-cover" />
+
+                {/* Googleドライブの埋め込み（画像プレビューの代わりにこれを配置！） */}
+                <div className="mb-6 overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-inner bg-white h-[750px] max-w-2xl relative w-full">
+                  <iframe
+                    src="https://drive.google.com/file/d/1xk3_-6cuyUjjqSWICikmzCjqFmbeKnt7/preview"
+                    className="absolute top-0 left-0 w-full h-full border-0"
+                    allow="autoplay"
+                    loading="lazy"
+                  ></iframe>
                 </div>
-                <p className="text-slate-600 mb-6">最新号の自治会便りをダウンロードして、活動情報をチェックしましょう。</p>
-                <button className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-white font-semibold shadow-lg hover:bg-orange-600 transition">
-                  PDFダウンロード
-                </button>
+
+                <p className="text-slate-600 text-sm mb-2 text-left">
+                  ※資料が表示されない場合や、文字が小さくて読みにくい場合は、スマートフォンを横向きにするか、各資料の右上にある「矢印マーク（別ウィンドウで開く）」を押してご覧ください。
+                </p>
               </div>
             </div>
           </div>
