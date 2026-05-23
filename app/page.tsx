@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState,useEffect } from 'react';
-import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X } from 'lucide-react';
+import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
 import Image from 'next/image'; 
 
 export default function Home() {
@@ -173,31 +173,31 @@ export default function Home() {
                 </p>
               </div>
               <div className="bg-amber-50 p-10 rounded-[2rem] shadow-lg border border-orange-100">
-                <h4 className="text-xl font-semibold text-slate-900 mb-6">主な活動</h4>
+                <h4 className="text-xl font-semibold text-slate-900 mb-6">自治会活動</h4>
                 <ul className="space-y-4 text-slate-600">
                   <li className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
-                      <Shield className="h-5 w-5" />
+                      <PartyPopper className="h-5 w-5" />
                     </span>
-                    <span className="font-medium text-slate-700">防犯パトロール</span>
+                    <span className="font-medium text-slate-700">餅つき大会・懇親会</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
-                      <Heart className="h-5 w-5" />
+                      <Sun className="h-5 w-5" />
                     </span>
-                    <span className="font-medium text-slate-700">ゴミ拾い活動</span>
+                    <span className="font-medium text-slate-700">夏まつり・水遊び</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
-                      <Calendar className="h-5 w-5" />
+                      <Gift className="h-5 w-5" />
                     </span>
-                    <span className="font-medium text-slate-700">季節のイベント</span>
+                    <span className="font-medium text-slate-700">長寿記念品・花小鉢贈呈</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
-                      <Users className="h-5 w-5" />
+                      <Sprout className="h-5 w-5" />
                     </span>
-                    <span className="font-medium text-slate-700">福祉活動</span>
+                    <span className="font-medium text-slate-700">環境美化への取り組み</span>
                   </li>
                 </ul>
               </div>
