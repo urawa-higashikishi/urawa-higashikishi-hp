@@ -139,8 +139,8 @@ export default function Home() {
       {/* <section className="py-24"> */}
       <section className="relative py-24">
         {/* コンテンツ */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-orange-100 bg-white shadow-xl p-14 text-center">
+        <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
+          <div className="relative overflow-hidden md:rounded-[2.5rem] border-0 md:border border-orange-100 bg-transparent md:bg-white md:shadow-xl p-6 py-12 md:p-14 text-center">
             <div className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-orange-100 opacity-80 blur-2xl"></div>
             <p className="relative inline-flex items-center rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700 mb-6">地域のつながりを育む</p>
             <h2 className="relative text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。安全で安心な地域づくり</h2>
@@ -158,8 +158,8 @@ export default function Home() {
 
       {/* 自治会紹介 */}
       <section id="about" className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
+        <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
+          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の主な活動</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
             <div className="grid md:grid-cols-2 gap-10">
@@ -172,7 +172,7 @@ export default function Home() {
                   会員数は790世帯。地域の声を反映した活動を行っています。
                 </p>
               </div>
-              <div className="bg-amber-50 p-10 rounded-[2rem] shadow-lg border border-orange-100">
+                <div className="bg-white p-10 rounded-[2rem] shadow-lg border border-orange-100">
                 <h4 className="text-xl font-semibold text-slate-900 mb-6">自治会活動</h4>
                 <ul className="space-y-4 text-slate-600">
                   <li className="flex items-center gap-3">
@@ -208,12 +208,12 @@ export default function Home() {
 
       {/* お知らせ＆PDF */}
       <section id="news" className="py-16 bg-amber-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
+        <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
+          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 p-0 md:p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の最新情報</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">最新のお知らせ</h3>
             <div className="space-y-8">
-              <div className="bg-slate-50 p-10 rounded-[2rem] shadow-lg border border-slate-200">
+              <div className="bg-slate-50 p-2 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     <Bell className="h-6 w-6" />
@@ -229,7 +229,7 @@ export default function Home() {
                   <li>• （仮）防犯パトロールの参加者を募集しています。</li>
                 </ul>
               </div>
-              <div className="bg-slate-50 p-6 md:p-10 rounded-[2rem] shadow-lg border border-slate-200">
+              <div className="bg-slate-50 p-0 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     {/* アイコンをカレンダーやダウンロードからフォルダ（回覧用）に変更 */}
@@ -242,7 +242,8 @@ export default function Home() {
                 </div>
 
                 {/* Googleドライブの埋め込み（画像プレビューの代わりにこれを配置！） */}
-                <div className="mb-6 overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-inner bg-white h-[750px] max-w-2xl relative w-full">
+                <div className="mb-6 overflow-hidden md:rounded-[1.5rem] border-y md:border border-slate-200 shadow-inner bg-white h-[480px] md:h-[850px] max-w-full md:max-w-3xl relative w-full">
+
                   <iframe
                     src="https://drive.google.com/file/d/1xk3_-6cuyUjjqSWICikmzCjqFmbeKnt7/preview"
                     className="absolute top-0 left-0 w-full h-full border-0"
