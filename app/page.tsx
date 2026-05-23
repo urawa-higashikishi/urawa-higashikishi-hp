@@ -145,9 +145,13 @@ export default function Home() {
             <p className="relative inline-flex items-center rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700 mb-6">地域のつながりを育む</p>
             <h2 className="relative text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。安全で安心な地域づくり</h2>
             <p className="relative mx-auto max-w-2xl text-xl text-slate-600 mb-10">住民一人ひとりが支え合う、活気に満ちた東岸町の暮らしを創造します。</p>
-            <button className="relative inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-600 transition">
+            <a 
+            href="#contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-600 transition hover:scale-105">
               入会のお問い合わせ
-            </button>
+            </a>
           </div>
         </div>
       </section>
