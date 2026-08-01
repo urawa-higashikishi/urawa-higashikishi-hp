@@ -2,11 +2,57 @@
 
 import React, { useState,useEffect } from 'react';
 import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
-import Image from 'next/image'; 
+import Image from 'next/image';
+
+// お知らせは下記スプレッドシートのA列（見出し行を除く）から取得します
+// https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/edit
+const NEWS_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/export?format=csv&gid=0';
+
+const DEFAULT_ANNOUNCEMENTS = [
+  '（仮）2026年夏祭りの開催日が決定しました。',
+  '（仮）新年度の入会受付を開始します。',
+  '（仮）防犯パトロールの参加者を募集しています。',
+];
+
+// 1行1セルのシンプルなCSV（ダブルクォート囲み・""エスケープのみ）を前提にした最小限のパーサー
+function parseSingleColumnCsv(csv: string): string[] {
+  return csv
+    .split(/\r\n|\n/)
+    .map((line) => {
+      const trimmed = line.trim();
+      if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
+        return trimmed.slice(1, -1).replace(/""/g, '"');
+      }
+      return trimmed;
+    })
+    .slice(1) // 見出し行を除く
+    .map((text) => text.replace(/^[•・\s]+/, '').trim())
+    .filter((text) => text.length > 0);
+}
 
 export default function Home() {
     // スクロール位置を管理する状態
     const [showTop, setShowTop] = useState(false);
+
+  const [announcements, setAnnouncements] = useState<string[]>(DEFAULT_ANNOUNCEMENTS);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(NEWS_SHEET_CSV_URL)
+      .then((res) => (res.ok ? res.text() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((csv) => {
+        const parsed = parseSingleColumnCsv(csv);
+        if (!cancelled && parsed.length > 0) {
+          setAnnouncements(parsed);
+        }
+      })
+      .catch(() => {
+        // 取得に失敗した場合は既定のお知らせ（DEFAULT_ANNOUNCEMENTS）を表示したままにする
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -224,9 +270,9 @@ export default function Home() {
                   </div>
                 </div>
                 <ul className="space-y-3 text-slate-600">
-                  <li>• （仮）2026年夏祭りの開催日が決定しました。</li>
-                  <li>• （仮）新年度の入会受付を開始します。</li>
-                  <li>• （仮）防犯パトロールの参加者を募集しています。</li>
+                  {announcements.map((text, index) => (
+                    <li key={index}>• {text}</li>
+                  ))}
                 </ul>
               </div>
               <div className="bg-slate-50 p-0 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
