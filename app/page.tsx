@@ -200,7 +200,7 @@ export default function Home() {
     },
     {
       name: '水遊び',
-      time: '8月',
+      time: '7月',
       place: '大谷場小学校 校庭',
       description: '校庭を借用し、水鉄砲を使った水遊びを開催します。'
     },
