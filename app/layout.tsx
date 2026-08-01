@@ -38,9 +38,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-    icons: {
-    icon: "/favicon.png", // または .ico
-  },
 };
 export default function RootLayout({
   children,

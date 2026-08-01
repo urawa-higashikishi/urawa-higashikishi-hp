@@ -45,10 +45,11 @@ function parseSingleColumnCsv(csv: string): string[] {
     .filter((text) => text.length > 0);
 }
 
-type DriveImageFile = { id: string; name: string };
+type DriveImageFile = { id: string; name: string; mimeType: string; thumbnailLink?: string };
 
-// 指定したGoogleドライブフォルダ内の画像ファイル一覧を取得する（回覧板・活動写真ギャラリーで共用）
-function useDriveImageFolder(folderId: string) {
+// 指定したGoogleドライブフォルダ内のファイル一覧を取得する（回覧板・活動写真ギャラリーで共用）
+// mimeQueryで対象ファイルの種類を絞り込む（省略時は画像のみ）
+function useDriveImageFolder(folderId: string, mimeQuery: string = "mimeType contains 'image/'") {
   const [files, setFiles] = useState<DriveImageFile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -57,9 +58,9 @@ function useDriveImageFolder(folderId: string) {
     let cancelled = false;
     const controller = new AbortController();
     const params = new URLSearchParams({
-      q: `'${folderId}' in parents and trashed = false and mimeType contains 'image/'`,
+      q: `'${folderId}' in parents and trashed = false and (${mimeQuery})`,
       key: DRIVE_API_KEY,
-      fields: 'files(id,name)',
+      fields: 'files(id,name,mimeType,thumbnailLink)',
       orderBy: 'modifiedTime desc',
     });
     fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`, { signal: controller.signal })
@@ -80,7 +81,7 @@ function useDriveImageFolder(folderId: string) {
       cancelled = true;
       controller.abort();
     };
-  }, [folderId]);
+  }, [folderId, mimeQuery]);
 
   return { files, loading, error };
 }
@@ -117,7 +118,10 @@ export default function Home() {
     };
   }, []);
 
-  const { files: newsletterFiles, loading: newsletterLoading, error: newsletterError } = useDriveImageFolder(NEWSLETTER_FOLDER_ID);
+  const { files: newsletterFiles, loading: newsletterLoading, error: newsletterError } = useDriveImageFolder(
+    NEWSLETTER_FOLDER_ID,
+    "mimeType contains 'image/' or mimeType = 'application/pdf'"
+  );
   const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
   const galleryScrollRef = useRef<HTMLDivElement>(null);
   const scrollGallery = (direction: number) => {
@@ -442,23 +446,37 @@ export default function Home() {
                     <p className="text-slate-400 text-sm">現在表示できる資料はありません。</p>
                   ) : (
                     <div className="space-y-4">
-                      {newsletterFiles.map((file) => (
-                        <a
-                          key={file.id}
-                          href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
-                            alt={file.name}
-                            loading="lazy"
-                            className="w-full h-auto"
-                          />
-                        </a>
-                      ))}
+                      {newsletterFiles.map((file) => {
+                        const isPdf = file.mimeType === 'application/pdf';
+                        const viewHref = isPdf
+                          ? `https://drive.google.com/uc?export=download&id=${file.id}`
+                          : `https://lh3.googleusercontent.com/d/${file.id}=w2400`;
+                        const thumbSrc = isPdf
+                          ? (file.thumbnailLink ?? '').replace(/=s\d+$/, '=s1600')
+                          : `https://lh3.googleusercontent.com/d/${file.id}=w1200`;
+                        return (
+                          <a
+                            key={file.id}
+                            href={viewHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={thumbSrc}
+                              alt={file.name}
+                              loading="lazy"
+                              className="w-full h-auto"
+                            />
+                            {isPdf && (
+                              <p className="text-slate-500 text-xs text-center py-2 border-t border-slate-100">
+                                PDF資料（タップでダウンロード）: {file.name}
+                              </p>
+                            )}
+                          </a>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
