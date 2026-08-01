@@ -34,7 +34,8 @@ export default function Home() {
     // スクロール位置を管理する状態
     const [showTop, setShowTop] = useState(false);
 
-  const [announcements, setAnnouncements] = useState<string[]>(DEFAULT_ANNOUNCEMENTS);
+  const [announcements, setAnnouncements] = useState<string[]>([]);
+  const [announcementsLoading, setAnnouncementsLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -42,12 +43,17 @@ export default function Home() {
       .then((res) => (res.ok ? res.text() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((csv) => {
         const parsed = parseSingleColumnCsv(csv);
-        if (!cancelled && parsed.length > 0) {
-          setAnnouncements(parsed);
+        if (!cancelled) {
+          setAnnouncements(parsed.length > 0 ? parsed : DEFAULT_ANNOUNCEMENTS);
+          setAnnouncementsLoading(false);
         }
       })
       .catch(() => {
-        // 取得に失敗した場合は既定のお知らせ（DEFAULT_ANNOUNCEMENTS）を表示したままにする
+        // 取得に失敗した場合は既定のお知らせ（DEFAULT_ANNOUNCEMENTS）を表示する
+        if (!cancelled) {
+          setAnnouncements(DEFAULT_ANNOUNCEMENTS);
+          setAnnouncementsLoading(false);
+        }
       });
     return () => {
       cancelled = true;
@@ -270,9 +276,13 @@ export default function Home() {
                   </div>
                 </div>
                 <ul className="space-y-3 text-slate-600">
-                  {announcements.map((text, index) => (
-                    <li key={index}>• {text}</li>
-                  ))}
+                  {announcementsLoading ? (
+                    <li className="text-slate-400">読み込み中…</li>
+                  ) : (
+                    announcements.map((text, index) => (
+                      <li key={index}>• {text}</li>
+                    ))
+                  )}
                 </ul>
               </div>
               <div className="bg-slate-50 p-0 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
