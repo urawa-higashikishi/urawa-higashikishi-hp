@@ -484,7 +484,7 @@ export default function Home() {
                             {isPdf && (
                               <div className="border-t border-slate-100">
                                 <div className="flex items-center justify-between gap-2 px-4 py-2">
-                                  <p className="text-slate-500 text-xs">PDF資料: {file.name}</p>
+                                  <p className="text-slate-500 text-xs">PDF資料（画像タップでダウンロード）: {file.name}</p>
                                   <button
                                     type="button"
                                     onClick={() => togglePdfExpanded(file.id)}
