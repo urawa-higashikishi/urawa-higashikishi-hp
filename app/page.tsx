@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState,useEffect } from 'react';
-import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Bell, Calendar, MapPin, ChevronDown, ChevronLeft, ChevronRight, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -119,6 +119,10 @@ export default function Home() {
 
   const { files: newsletterFiles, loading: newsletterLoading, error: newsletterError } = useDriveImageFolder(NEWSLETTER_FOLDER_ID);
   const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
+  const galleryScrollRef = useRef<HTMLDivElement>(null);
+  const scrollGallery = (direction: number) => {
+    galleryScrollRef.current?.scrollBy({ left: direction * 320, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -546,24 +550,45 @@ export default function Home() {
             ) : galleryFiles.length === 0 ? (
               <p className="text-slate-400 text-sm text-center">現在表示できる写真はありません。</p>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {galleryFiles.map((file) => (
-                  <a
-                    key={file.id}
-                    href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block aspect-square overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-slate-50"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
-                      alt={file.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  </a>
-                ))}
+              <div className="relative">
+                <div
+                  ref={galleryScrollRef}
+                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  {galleryFiles.map((file) => (
+                    <a
+                      key={file.id}
+                      href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block shrink-0 snap-center w-[70%] sm:w-[45%] md:w-[30%] aspect-square overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-slate-50"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://lh3.googleusercontent.com/d/${file.id}=w800`}
+                        alt={file.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </a>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => scrollGallery(-1)}
+                  aria-label="前の写真"
+                  className="hidden md:flex absolute top-1/2 -left-4 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg border border-slate-200 text-slate-600 hover:text-orange-600"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollGallery(1)}
+                  aria-label="次の写真"
+                  className="hidden md:flex absolute top-1/2 -right-4 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg border border-slate-200 text-slate-600 hover:text-orange-600"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
             )}
           </div>
