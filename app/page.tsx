@@ -437,8 +437,8 @@ export default function Home() {
 
       {/* メリット */}
       <section id="benefits" className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2.5rem] bg-white shadow-lg border border-slate-200 p-12">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会するメリット</h3>
             <div className="space-y-8">
@@ -470,8 +470,8 @@ export default function Home() {
 
       {/* 行事予定 */}
       <section id="events" className="py-16 bg-amber-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {events.map((event, index) => (
@@ -492,8 +492,8 @@ export default function Home() {
 
       {/* Q&A */}
       <section id="faq" className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">よくある質問</h3>
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, index) => (
@@ -525,8 +525,8 @@ export default function Home() {
 
       {/* 地図 */}
       <section id="map" className="py-16 bg-amber-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
             <div className="flex items-center justify-center mb-4">
               <MapPin className="h-6 w-6 text-orange-600 mr-2" />
