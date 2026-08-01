@@ -172,7 +172,7 @@ export default function Home() {
                   会員数は790世帯。地域の声を反映した活動を行っています。
                 </p>
               </div>
-                <div className="bg-white p-10 rounded-[2rem] shadow-lg border border-orange-100">
+                <div className="-mx-6 md:mx-0 bg-white p-6 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-y border-x-0 md:border border-orange-100">
                 <h4 className="text-xl font-semibold text-slate-900 mb-6">自治会活動</h4>
                 <ul className="space-y-4 text-slate-600">
                   <li className="flex items-center gap-3">
