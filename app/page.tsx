@@ -90,7 +90,7 @@ export default function Home() {
     },
     {
       question: '会費はどのくらいですか？',
-      answer: '年間会費は5,000円です。'
+      answer: '1ヶ月350円です。集金は各班により1ヶ月毎・半年毎・1年分一括の方法があります。'
     },
     {
       question: 'イベントの参加方法は？',
