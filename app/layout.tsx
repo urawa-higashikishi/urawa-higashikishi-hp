@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   },
   description: "さいたま市浦和区・東岸自治会の公式ホームページです。地域の行事、ゴミ収集日、防災情報など、住民の皆様に役立つ情報を発信しています。",
   keywords: ["東岸町自治会", "自治会", "東岸町", "浦和区", "さいたま市", "防災", "地域活動"],
-  robots: "noindex, nofollow", // これでGoogle等の検索結果に出なくなります（関係者限定公開用）
 
   // LINEやSNSでシェアした時の見栄え（OGP設定）
   openGraph: {
