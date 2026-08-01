@@ -354,7 +354,7 @@ export default function Home() {
                 {/* Googleドライブのフォルダをそのまま埋め込み表示。フォルダ内のファイルを追加・削除するとここに反映されます */}
                 <div className="mb-6 overflow-hidden md:rounded-[1.5rem] border-y md:border border-slate-200 shadow-inner bg-white h-[480px] md:h-[600px] max-w-full md:max-w-3xl relative w-full">
                   <iframe
-                    src="https://drive.google.com/embeddedfolderview?id=1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f&hl=ja#list"
+                    src="https://drive.google.com/embeddedfolderview?id=1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f&hl=ja#grid"
                     className="absolute top-0 left-0 w-full h-full border-0"
                     loading="lazy"
                   ></iframe>
