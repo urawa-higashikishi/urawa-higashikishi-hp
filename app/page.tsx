@@ -16,6 +16,10 @@ const NEWSLETTER_FOLDER_ID = '1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f';
 const DRIVE_API_KEY = 'AIzaSyCq3qVMFzyXS3lqsbNqwSEWcuolQiphbSY';
 const NEWSLETTER_FOLDER_URL = `https://drive.google.com/drive/folders/${NEWSLETTER_FOLDER_ID}`;
 
+// スマホでは画面幅いっぱい・PCでは白背景の角丸カードになるセクション共通の外枠スタイル
+const SECTION_CARD_LG = 'md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12';
+const SECTION_CARD_SM = 'md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10';
+
 const DEFAULT_ANNOUNCEMENTS = [
   '（仮）2026年夏祭りの開催日が決定しました。',
   '（仮）新年度の入会受付を開始します。',
@@ -47,7 +51,8 @@ export default function Home() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(NEWS_SHEET_CSV_URL)
+    const controller = new AbortController();
+    fetch(NEWS_SHEET_CSV_URL, { signal: controller.signal })
       .then((res) => (res.ok ? res.text() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((csv) => {
         const parsed = parseSingleColumnCsv(csv);
@@ -65,6 +70,7 @@ export default function Home() {
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, []);
 
@@ -74,13 +80,14 @@ export default function Home() {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
     const params = new URLSearchParams({
       q: `'${NEWSLETTER_FOLDER_ID}' in parents and trashed = false and mimeType contains 'image/'`,
       key: DRIVE_API_KEY,
       fields: 'files(id,name)',
       orderBy: 'modifiedTime desc',
     });
-    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`)
+    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`, { signal: controller.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((data) => {
         if (!cancelled) {
@@ -96,6 +103,7 @@ export default function Home() {
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, []);
 
@@ -304,7 +312,7 @@ export default function Home() {
       {/* 自治会紹介 */}
       <section id="about" className="py-16">
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
-          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
+          <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の主な活動</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
             <div className="grid md:grid-cols-2 gap-10">
@@ -372,8 +380,8 @@ export default function Home() {
                   {announcementsLoading ? (
                     <li className="text-slate-400">読み込み中…</li>
                   ) : (
-                    announcements.map((text, index) => (
-                      <li key={index}>• {text}</li>
+                    announcements.map((text) => (
+                      <li key={text}>• {text}</li>
                     ))
                   )}
                 </ul>
@@ -439,7 +447,7 @@ export default function Home() {
       {/* メリット */}
       <section id="benefits" className="py-16">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
+          <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
             <div className="space-y-8">
@@ -472,7 +480,7 @@ export default function Home() {
       {/* 行事予定 */}
       <section id="events" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
+          <div className={SECTION_CARD_SM}>
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {events.map((event, index) => (
@@ -494,7 +502,7 @@ export default function Home() {
       {/* Q&A */}
       <section id="faq" className="py-16">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
+          <div className={SECTION_CARD_SM}>
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">よくある質問</h3>
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, index) => (
@@ -527,7 +535,7 @@ export default function Home() {
       {/* 地図 */}
       <section id="map" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10">
+          <div className={SECTION_CARD_SM}>
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
             <div className="flex items-center justify-center mb-4">
               <MapPin className="h-6 w-6 text-orange-600 mr-2" />
