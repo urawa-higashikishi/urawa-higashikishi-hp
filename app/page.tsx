@@ -463,7 +463,7 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">連絡先</h4>
-              <p className="text-slate-300">電話: 090-1126-2799</p>
+              <p className="text-slate-300">会長 電話: 090-1126-2799</p>
               <p className="text-slate-300">メール: urawa-higashikishi@gmail.com</p>
             </div>
             <div>
