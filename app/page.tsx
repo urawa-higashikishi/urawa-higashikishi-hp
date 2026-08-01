@@ -408,14 +408,14 @@ export default function Home() {
                       {newsletterFiles.map((file) => (
                         <a
                           key={file.id}
-                          href={`https://drive.google.com/thumbnail?id=${file.id}&sz=w2000`}
+                          href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
-                            src={`https://drive.google.com/thumbnail?id=${file.id}&sz=w1200`}
+                            src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
                             alt={file.name}
                             loading="lazy"
                             className="w-full h-auto"
