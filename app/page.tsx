@@ -8,6 +8,13 @@ import Image from 'next/image';
 // https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/edit
 const NEWS_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/export?format=csv&gid=0';
 
+// デジタル回覧板は下記Googleドライブフォルダの中身（画像ファイル）を一覧表示します
+// https://drive.google.com/drive/folders/1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f
+const NEWSLETTER_FOLDER_ID = '1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f';
+// Google Cloud Consoleで発行したAPIキー（HTTPリファラーをこのサイトのURLに制限済み・Google Drive APIのみ許可）
+const DRIVE_API_KEY = 'AIzaSyCq3qVMFzyXS3lqsbNqwSEWcuolQiphbSY';
+const NEWSLETTER_FOLDER_URL = `https://drive.google.com/drive/folders/${NEWSLETTER_FOLDER_ID}`;
+
 const DEFAULT_ANNOUNCEMENTS = [
   '（仮）2026年夏祭りの開催日が決定しました。',
   '（仮）新年度の入会受付を開始します。',
@@ -53,6 +60,37 @@ export default function Home() {
         if (!cancelled) {
           setAnnouncements(DEFAULT_ANNOUNCEMENTS);
           setAnnouncementsLoading(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const [newsletterFiles, setNewsletterFiles] = useState<{ id: string; name: string }[]>([]);
+  const [newsletterLoading, setNewsletterLoading] = useState(true);
+  const [newsletterError, setNewsletterError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const params = new URLSearchParams({
+      q: `'${NEWSLETTER_FOLDER_ID}' in parents and trashed = false and mimeType contains 'image/'`,
+      key: DRIVE_API_KEY,
+      fields: 'files(id,name)',
+      orderBy: 'modifiedTime desc',
+    });
+    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data) => {
+        if (!cancelled) {
+          setNewsletterFiles(data.files ?? []);
+          setNewsletterLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setNewsletterError(true);
+          setNewsletterLoading(false);
         }
       });
     return () => {
@@ -351,18 +389,45 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Googleドライブのフォルダをそのまま埋め込み表示。フォルダ内のファイルを追加・削除するとここに反映されます */}
-                <div className="mb-6 overflow-hidden md:rounded-[1.5rem] border-y md:border border-slate-200 shadow-inner bg-white h-[480px] md:h-[600px] max-w-full md:max-w-3xl relative w-full">
-                  <iframe
-                    src="https://drive.google.com/embeddedfolderview?id=1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f&hl=ja#grid"
-                    className="absolute top-0 left-0 border-0"
-                    style={{ width: '62.5%', height: '62.5%', transform: 'scale(1.6)', transformOrigin: 'top left' }}
-                    loading="lazy"
-                  ></iframe>
+                {/* Googleドライブフォルダ内の画像を直接埋め込み表示。フォルダ内のファイルを追加・削除するとここに反映されます */}
+                <div className="mb-6 max-w-full md:max-w-3xl">
+                  {newsletterLoading ? (
+                    <p className="text-slate-400 text-sm">読み込み中…</p>
+                  ) : newsletterError ? (
+                    <p className="text-slate-500 text-sm">
+                      資料の読み込みに失敗しました。
+                      <a href={NEWSLETTER_FOLDER_URL} target="_blank" rel="noopener noreferrer" className="text-orange-600 underline">
+                        こちらのフォルダ
+                      </a>
+                      から直接ご覧ください。
+                    </p>
+                  ) : newsletterFiles.length === 0 ? (
+                    <p className="text-slate-400 text-sm">現在表示できる資料はありません。</p>
+                  ) : (
+                    <div className="space-y-4">
+                      {newsletterFiles.map((file) => (
+                        <a
+                          key={file.id}
+                          href={`https://drive.google.com/thumbnail?id=${file.id}&sz=w2000`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={`https://drive.google.com/thumbnail?id=${file.id}&sz=w1200`}
+                            alt={file.name}
+                            loading="lazy"
+                            className="w-full h-auto"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <p className="text-slate-600 text-sm mb-2 text-left">
-                  ※一覧から資料を選ぶとプレビューが開きます。表示されない場合や文字が小さくて読みにくい場合は、右上の「矢印マーク（別ウィンドウで開く）」を押してご覧ください。
+                  ※画像をタップ・クリックすると、拡大版が新しいタブで開きます。
                 </p>
               </div>
             </div>
