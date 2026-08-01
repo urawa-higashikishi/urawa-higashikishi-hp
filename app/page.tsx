@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Bell, Calendar, MapPin, ChevronDown, ChevronLeft, ChevronRight, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const PdfViewer = dynamic(() => import('./components/PdfViewer'), { ssr: false });
 
 // お知らせは下記スプレッドシートのA列（見出し行を除く）から取得します
 // https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/edit
@@ -123,6 +126,18 @@ export default function Home() {
     "mimeType contains 'image/' or mimeType = 'application/pdf'"
   );
   const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
+  const [expandedPdfIds, setExpandedPdfIds] = useState<Set<string>>(new Set());
+  const togglePdfExpanded = (id: string) => {
+    setExpandedPdfIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
   const galleryScrollRef = useRef<HTMLDivElement>(null);
   const scrollGallery = (direction: number) => {
     galleryScrollRef.current?.scrollBy({ left: direction * 320, behavior: 'smooth' });
@@ -448,33 +463,44 @@ export default function Home() {
                     <div className="space-y-4">
                       {newsletterFiles.map((file) => {
                         const isPdf = file.mimeType === 'application/pdf';
-                        const viewHref = isPdf
+                        const downloadHref = isPdf
                           ? `https://drive.google.com/uc?export=download&id=${file.id}`
                           : `https://lh3.googleusercontent.com/d/${file.id}=w2400`;
                         const thumbSrc = isPdf
                           ? (file.thumbnailLink ?? '').replace(/=s\d+$/, '=s1600')
                           : `https://lh3.googleusercontent.com/d/${file.id}=w1200`;
+                        const isExpanded = expandedPdfIds.has(file.id);
                         return (
-                          <a
-                            key={file.id}
-                            href={viewHref}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white"
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={thumbSrc}
-                              alt={file.name}
-                              loading="lazy"
-                              className="w-full h-auto"
-                            />
+                          <div key={file.id} className="overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white">
+                            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="block">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={thumbSrc}
+                                alt={file.name}
+                                loading="lazy"
+                                className="w-full h-auto"
+                              />
+                            </a>
                             {isPdf && (
-                              <p className="text-slate-500 text-xs text-center py-2 border-t border-slate-100">
-                                PDF資料（タップでダウンロード）: {file.name}
-                              </p>
+                              <div className="border-t border-slate-100">
+                                <div className="flex items-center justify-between gap-2 px-4 py-2">
+                                  <p className="text-slate-500 text-xs">PDF資料: {file.name}</p>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePdfExpanded(file.id)}
+                                    className="shrink-0 text-orange-600 text-xs font-semibold underline hover:text-orange-700"
+                                  >
+                                    {isExpanded ? '閉じる' : '全ページを表示'}
+                                  </button>
+                                </div>
+                                {isExpanded && (
+                                  <div className="p-4 pt-0">
+                                    <PdfViewer url={`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`} />
+                                  </div>
+                                )}
+                              </div>
                             )}
-                          </a>
+                          </div>
                         );
                       })}
                     </div>

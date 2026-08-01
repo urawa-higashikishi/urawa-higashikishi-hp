@@ -38,6 +38,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  icons: {
+    icon: [{ url: "/favicon-icon.png", sizes: "192x192", type: "image/png" }],
+  },
 };
 export default function RootLayout({
   children,
