@@ -3,6 +3,7 @@
 import React, { useState,useEffect } from 'react';
 import { Bell, Calendar, MapPin, ChevronDown, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // お知らせは下記スプレッドシートのA列（見出し行を除く）から取得します
 // https://docs.google.com/spreadsheets/d/19_KtzUPtbjno4_GE-KQMezMKcWFgI3dkNJMRpaxgPxo/edit
@@ -287,7 +288,7 @@ export default function Home() {
           <div className="relative overflow-hidden md:rounded-[2.5rem] border-0 md:border border-orange-100 bg-transparent md:bg-white md:shadow-xl p-6 py-12 md:p-14 text-center">
             <div className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-orange-100 opacity-80 blur-2xl"></div>
             <p className="relative inline-flex items-center rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700 mb-6">地域のつながりを育む</p>
-            <h2 className="relative text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。安全で安心な地域づくり</h2>
+            <h2 className="relative text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。<br className="md:hidden" />安全で安心な<br className="md:hidden" />地域づくり</h2>
             <p className="relative mx-auto max-w-2xl text-xl text-slate-600 mb-10">住民一人ひとりが支え合う、活気に満ちた東岸町の暮らしを創造します。</p>
             <a 
             href="https://docs.google.com/forms/d/e/1FAIpQLSebnKdQUw8PjZQhKV2C-TzwLQLfb7I5PoISq7BdWAXzJYseUg/viewform?usp=publish-editor"
@@ -440,7 +441,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会するメリット</h3>
+            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
             <div className="space-y-8">
               <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
@@ -562,8 +563,7 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">リンク</h4>
               <ul className="text-slate-300 space-y-1">
-                <li><a href="#" className="hover:text-white">プライバシーポリシー</a></li>
-                <li><a href="#" className="hover:text-white">利用規約</a></li>
+                <li><Link href="/privacy" className="hover:text-white">プライバシーポリシー</Link></li>
               </ul>
             </div>
           </div>
