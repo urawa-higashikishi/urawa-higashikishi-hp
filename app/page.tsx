@@ -12,6 +12,9 @@ const NEWS_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/19_KtzUPtbjno
 // デジタル回覧板は下記Googleドライブフォルダの中身（画像ファイル）を一覧表示します
 // https://drive.google.com/drive/folders/1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f
 const NEWSLETTER_FOLDER_ID = '1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f';
+// 活動写真ギャラリーも同様に下記フォルダの中身（画像ファイル）を一覧表示します
+// https://drive.google.com/drive/folders/1OjcGJ9RGWel0eAbcrb934jCQ2zL6LZJN
+const GALLERY_FOLDER_ID = '1OjcGJ9RGWel0eAbcrb934jCQ2zL6LZJN';
 // Google Cloud Consoleで発行したAPIキー（HTTPリファラーをこのサイトのURLに制限済み・Google Drive APIのみ許可）
 const DRIVE_API_KEY = 'AIzaSyCq3qVMFzyXS3lqsbNqwSEWcuolQiphbSY';
 const NEWSLETTER_FOLDER_URL = `https://drive.google.com/drive/folders/${NEWSLETTER_FOLDER_ID}`;
@@ -40,6 +43,46 @@ function parseSingleColumnCsv(csv: string): string[] {
     .slice(1) // 見出し行を除く
     .map((text) => text.replace(/^[•・\s]+/, '').trim())
     .filter((text) => text.length > 0);
+}
+
+type DriveImageFile = { id: string; name: string };
+
+// 指定したGoogleドライブフォルダ内の画像ファイル一覧を取得する（回覧板・活動写真ギャラリーで共用）
+function useDriveImageFolder(folderId: string) {
+  const [files, setFiles] = useState<DriveImageFile[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      q: `'${folderId}' in parents and trashed = false and mimeType contains 'image/'`,
+      key: DRIVE_API_KEY,
+      fields: 'files(id,name)',
+      orderBy: 'modifiedTime desc',
+    });
+    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`, { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data) => {
+        if (!cancelled) {
+          setFiles(data.files ?? []);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setError(true);
+          setLoading(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [folderId]);
+
+  return { files, loading, error };
 }
 
 export default function Home() {
@@ -74,38 +117,8 @@ export default function Home() {
     };
   }, []);
 
-  const [newsletterFiles, setNewsletterFiles] = useState<{ id: string; name: string }[]>([]);
-  const [newsletterLoading, setNewsletterLoading] = useState(true);
-  const [newsletterError, setNewsletterError] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    const controller = new AbortController();
-    const params = new URLSearchParams({
-      q: `'${NEWSLETTER_FOLDER_ID}' in parents and trashed = false and mimeType contains 'image/'`,
-      key: DRIVE_API_KEY,
-      fields: 'files(id,name)',
-      orderBy: 'modifiedTime desc',
-    });
-    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`, { signal: controller.signal })
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((data) => {
-        if (!cancelled) {
-          setNewsletterFiles(data.files ?? []);
-          setNewsletterLoading(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setNewsletterError(true);
-          setNewsletterLoading(false);
-        }
-      });
-    return () => {
-      cancelled = true;
-      controller.abort();
-    };
-  }, []);
+  const { files: newsletterFiles, loading: newsletterLoading, error: newsletterError } = useDriveImageFolder(NEWSLETTER_FOLDER_ID);
+  const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -245,6 +258,7 @@ export default function Home() {
               <a href="#about" className="hover:text-orange-700 transition drop-shadow-sm">自治会紹介</a>
               <a href="#news" className="hover:text-orange-700 transition drop-shadow-sm">お知らせ</a>
               <a href="#events" className="hover:text-orange-700 transition drop-shadow-sm">行事予定</a>
+              <a href="#gallery" className="hover:text-orange-700 transition drop-shadow-sm">活動の様子</a>
               <a href="#benefits" className="hover:text-orange-700 transition drop-shadow-sm">入会メリット</a>
               <a href="#faq" className="hover:text-orange-700 transition drop-shadow-sm">よくある質問</a>
               <a href="#map" className="hover:text-orange-700 transition drop-shadow-sm">アクセス</a>
@@ -267,6 +281,7 @@ export default function Home() {
                       { name: "自治会紹介", href: "#about" },
                       { name: "お知らせ", href: "#news" },
                       { name: "行事予定", href: "#events" },
+                      { name: "活動の様子", href: "#gallery" },
                       { name: "入会メリット", href: "#benefits" },
                       { name: "よくある質問", href: "#faq" },
                       { name: "アクセス", href: "#map" },
@@ -315,6 +330,15 @@ export default function Home() {
           <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の主な活動</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
+            <div className="mb-10 bg-orange-50 border-l-4 border-orange-400 rounded-r-2xl p-6 md:p-8">
+              <h4 className="text-lg font-semibold text-slate-900 mb-3">会長からのご挨拶</h4>
+              <p className="text-slate-700 leading-relaxed">
+                この度、東岸町自治会区域内に転入居されましたことを、自治会を代表いたしまして歓迎申し上げます。
+                貴殿が一日も早く地域に馴染み、近隣の方々との友好の輪が広がりますよう、当自治会への加入をお待ちしております。
+                当自治会はJR浦和駅と南浦和駅の中間に位置し、東西に細長く展開しています。
+              </p>
+              <p className="text-right text-slate-900 font-semibold mt-4">東岸町自治会　会長　鈴木伸昭</p>
+            </div>
             <div className="grid md:grid-cols-2 gap-10">
               <div className="space-y-6 text-slate-600 leading-relaxed">
                 <p>
@@ -495,6 +519,53 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 活動写真ギャラリー */}
+      <section id="gallery" className="py-16">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+          <div className={SECTION_CARD_LG}>
+            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">活動の様子</h3>
+            {galleryLoading ? (
+              <p className="text-slate-400 text-sm text-center">読み込み中…</p>
+            ) : galleryError ? (
+              <p className="text-slate-500 text-sm text-center">
+                写真の読み込みに失敗しました。
+                <a
+                  href={`https://drive.google.com/drive/folders/${GALLERY_FOLDER_ID}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-600 underline"
+                >
+                  こちらのフォルダ
+                </a>
+                から直接ご覧ください。
+              </p>
+            ) : galleryFiles.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center">現在表示できる写真はありません。</p>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {galleryFiles.map((file) => (
+                  <a
+                    key={file.id}
+                    href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block aspect-square overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-slate-50"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
+                      alt={file.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
