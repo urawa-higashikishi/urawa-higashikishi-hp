@@ -110,6 +110,48 @@ export default function Home() {
     }
   ];
 
+  const events = [
+    {
+      name: '餅つき大会・懇親会',
+      time: '1月',
+      place: '自治会館前',
+      description: '子供たちと餅つき大会を開催。終了後、会員同士の親睦を目的とした懇親会を行います。'
+    },
+    {
+      name: '自治会総会',
+      time: '4月',
+      description: '自治会の運営について話し合う総会を開催します。'
+    },
+    {
+      name: '環境美化への取り組み',
+      time: '5月・11月',
+      place: '町内',
+      description: 'プランターの花植え替えや、市・区主催のゴミゼロ運動に協力します。'
+    },
+    {
+      name: '夏まつり',
+      time: '8月',
+      place: '自治会館前道路',
+      description: '熱中症対策のため宵まつりとして開催。子供向けの模擬店や子供神輿の展示を行います。'
+    },
+    {
+      name: '水遊び',
+      time: '8月',
+      place: '大谷場小学校 校庭',
+      description: '校庭を借用し、水鉄砲を使った水遊びを開催します。'
+    },
+    {
+      name: '長寿記念品贈呈',
+      time: '自治会主催',
+      description: '75歳以上の会員に長寿記念品を贈呈します。'
+    },
+    {
+      name: '花小鉢贈呈',
+      time: '12月',
+      description: '一人暮らしの高齢者に花小鉢をお贈りします。'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-amber-50">
       {/* Header */}
@@ -368,30 +410,17 @@ export default function Home() {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-10">
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
-                <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
-                  <h4 className="text-lg font-semibold text-slate-900">夏祭り</h4>
+              {events.map((event, index) => (
+                <div key={index} className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
+                  <div className="flex items-center mb-4">
+                    <Calendar className="h-6 w-6 text-orange-600 mr-2" />
+                    <h4 className="text-lg font-semibold text-slate-900">{event.name}</h4>
+                  </div>
+                  <p className="text-slate-600">時期: {event.time}</p>
+                  {event.place && <p className="text-slate-600">場所: {event.place}</p>}
+                  <p className="text-slate-500 text-sm mt-2">{event.description}</p>
                 </div>
-                <p className="text-slate-600">日時: XX月XX日 10:00-16:00</p>
-                <p className="text-slate-600">場所: 自治会館前</p>
-              </div>
-              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
-                <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
-                  <h4 className="text-lg font-semibold text-slate-900">防犯パトロール</h4>
-                </div>
-                <p className="text-slate-600">日時: 毎週土曜日 9:00-11:00</p>
-                <p className="text-slate-600">場所: 地区内</p>
-              </div>
-              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
-                <div className="flex items-center mb-4">
-                  <Calendar className="h-6 w-6 text-orange-600 mr-2" />
-                  <h4 className="text-lg font-semibold text-slate-900">新年会</h4>
-                </div>
-                <p className="text-slate-600">日時: 1月10日 18:00-20:00</p>
-                <p className="text-slate-600">場所: 自治会館</p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
