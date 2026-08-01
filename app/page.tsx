@@ -351,19 +351,17 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Googleドライブの埋め込み（画像プレビューの代わりにこれを配置！） */}
-                <div className="mb-6 overflow-hidden md:rounded-[1.5rem] border-y md:border border-slate-200 shadow-inner bg-white h-[480px] md:h-[850px] max-w-full md:max-w-3xl relative w-full">
-
+                {/* Googleドライブのフォルダをそのまま埋め込み表示。フォルダ内のファイルを追加・削除するとここに反映されます */}
+                <div className="mb-6 overflow-hidden md:rounded-[1.5rem] border-y md:border border-slate-200 shadow-inner bg-white h-[480px] md:h-[600px] max-w-full md:max-w-3xl relative w-full">
                   <iframe
-                    src="https://drive.google.com/file/d/1xk3_-6cuyUjjqSWICikmzCjqFmbeKnt7/preview"
+                    src="https://drive.google.com/embeddedfolderview?id=1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f&hl=ja#list"
                     className="absolute top-0 left-0 w-full h-full border-0"
-                    allow="autoplay"
                     loading="lazy"
                   ></iframe>
                 </div>
 
                 <p className="text-slate-600 text-sm mb-2 text-left">
-                  ※資料が表示されない場合や、文字が小さくて読みにくい場合は、スマートフォンを横向きにするか、各資料の右上にある「矢印マーク（別ウィンドウで開く）」を押してご覧ください。
+                  ※一覧から資料を選ぶとプレビューが開きます。表示されない場合や文字が小さくて読みにくい場合は、右上の「矢印マーク（別ウィンドウで開く）」を押してご覧ください。
                 </p>
               </div>
             </div>
