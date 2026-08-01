@@ -223,7 +223,7 @@ export default function Home() {
         {/* 背景画像レイヤー */}
         <div className="absolute inset-0 z-0">
             <Image 
-            src="/urawa-higashikishi-hp/header-bg.png" 
+            src="/header-bg.png"
             alt="背景" 
             fill 
             className="object-cover object-center opacity-50" 
@@ -240,7 +240,7 @@ export default function Home() {
               {/* 作成したロゴを表示 */}
               <div className="relative w-16 h-16 overflow-hidden rounded-lg shadow-sm border border-white/80">
                 <Image 
-                  src="/urawa-higashikishi-hp/favicon.png" 
+                  src="/favicon.png"
                   alt="東岸町自治会 紋章" 
                   fill
                   className="object-cover"

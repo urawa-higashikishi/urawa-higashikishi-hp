@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://higashikishi.com/"),
   title: {
     default: "東岸町自治会 公式サイト",
     template: "%s | 東岸町自治会"
@@ -24,13 +25,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "東岸町自治会 公式サイト",
     description: "地域の「安心・安全」をつなぐ、東岸町自治会の公式ページです。",
-    url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/",
+    url: "https://higashikishi.com/",
     siteName: "東岸町自治会",
     locale: "ja_JP",
     type: "website",
     images: [
       {
-        url: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/favicon.png", // 自治会便りの画像をプレビューに流用
+        url: "https://higashikishi.com/favicon.png", // 自治会便りの画像をプレビューに流用
         width: 1200,
         height: 630,
         alt: "東岸町自治会",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     ],
   },
     icons: {
-    icon: "/urawa-higashikishi-hp/favicon.png", // または .ico
+    icon: "/favicon.png", // または .ico
   },
 };
 export default function RootLayout({

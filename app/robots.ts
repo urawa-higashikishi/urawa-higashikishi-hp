@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://urawa-higashikishi.github.io/urawa-higashikishi-hp/sitemap.xml",
+    sitemap: "https://higashikishi.com/sitemap.xml",
   };
 }
