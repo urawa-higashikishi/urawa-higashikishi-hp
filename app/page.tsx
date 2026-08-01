@@ -160,7 +160,7 @@ export default function Home() {
           >
             「入会・お問い合わせフォーム」
           </a>
-          または会長にご連絡ください。入会手続きをご案内いたします。
+またはメールにてご連絡ください。入会手続きをご案内いたします。
         </>
       )
     },
@@ -661,7 +661,6 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">連絡先</h4>
-              <p className="text-slate-300">会長 電話: 090-1126-2799</p>
               <p className="text-slate-300">メール: urawa-higashikishi@gmail.com</p>
             </div>
             <div>

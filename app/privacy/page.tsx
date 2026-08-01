@@ -43,7 +43,7 @@ export default function PrivacyPolicy() {
               個人情報の取り扱いに関するお問い合わせは、下記までご連絡ください。
             </p>
             <p className="mt-2">
-              東岸町自治会　会長　電話: 090-1126-2799
+              東岸町自治会
               <br />
               メール: urawa-higashikishi@gmail.com
             </p>
