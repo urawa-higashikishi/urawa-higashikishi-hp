@@ -45,6 +45,23 @@ export const metadata: Metadata = {
     icon: [{ url: "/favicon-icon.png", sizes: "192x192", type: "image/png" }],
   },
 };
+
+// AIやAI検索エンジンがサイトの主体を正しく識別できるようにする構造化データ
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "東岸町自治会",
+  alternateName: "ひがしきしちょうじちかい",
+  url: "https://higashikishi.com/",
+  logo: "https://higashikishi.com/favicon.png",
+  description:
+    "さいたま市浦和区東岸町の住民組織。防犯・環境美化・コミュニティイベントなど地域の安全と快適な生活を目的とした自治会です。",
+  email: "urawa-higashikishi@gmail.com",
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "さいたま市浦和区東岸町",
+  },
+};
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,6 +73,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive">
         {`

@@ -169,6 +169,7 @@ export default function Home() {
   const faqs = [
     {
       question: '自治会に入会するにはどうすればいいですか？',
+      plainAnswer: '「入会・お問い合わせフォーム」またはメールにてご連絡ください。入会手続きをご案内いたします。',
       answer: (
         <>
           <a
@@ -185,13 +186,28 @@ export default function Home() {
     },
     {
       question: '会費はどのくらいですか？',
+      plainAnswer: '1ヶ月350円です。集金は各班により1ヶ月毎・半年毎・1年分一括の方法があります。',
       answer: '1ヶ月350円です。集金は各班により1ヶ月毎・半年毎・1年分一括の方法があります。'
     },
     {
       question: 'イベントの参加方法は？',
+      plainAnswer: '自治会ホームページや掲示板で告知されます。参加希望の方は事務局までご連絡ください。',
       answer: '自治会ホームページや掲示板で告知されます。参加希望の方は事務局までご連絡ください。'
     }
   ];
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.plainAnswer,
+      },
+    })),
+  };
 
   const events = [
     {
@@ -461,7 +477,7 @@ export default function Home() {
                     <p className="text-slate-400 text-sm">現在表示できる資料はありません。</p>
                   ) : (
                     <div className="space-y-4">
-                      {newsletterFiles.map((file) => {
+                      {newsletterFiles.map((file, index) => {
                         const isPdf = file.mimeType === 'application/pdf';
                         const downloadHref = isPdf
                           ? `https://drive.google.com/uc?export=download&id=${file.id}`
@@ -476,7 +492,7 @@ export default function Home() {
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src={thumbSrc}
-                                alt={file.name}
+                                alt={`東岸町自治会 デジタル回覧板・お知らせ資料${newsletterFiles.length > 1 ? ` ${index + 1}` : ''}`}
                                 loading="lazy"
                                 className="w-full h-auto"
                               />
@@ -599,7 +615,7 @@ export default function Home() {
                   ref={galleryScrollRef}
                   className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
-                  {galleryFiles.map((file) => (
+                  {galleryFiles.map((file, index) => (
                     <a
                       key={file.id}
                       href={`https://lh3.googleusercontent.com/d/${file.id}=w2400`}
@@ -610,7 +626,7 @@ export default function Home() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`https://lh3.googleusercontent.com/d/${file.id}=w800`}
-                        alt={file.name}
+                        alt={`東岸町自治会 活動の様子 ${index + 1}`}
                         loading="lazy"
                         className="w-full h-full object-cover"
                       />
@@ -641,6 +657,10 @@ export default function Home() {
 
       {/* Q&A */}
       <section id="faq" className="py-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_SM}>
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">よくある質問</h3>
