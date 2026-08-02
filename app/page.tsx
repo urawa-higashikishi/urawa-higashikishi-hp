@@ -699,7 +699,7 @@ export default function Home() {
             <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
             <div className="flex items-center justify-center mb-4">
               <MapPin className="h-6 w-6 text-orange-600 mr-2" />
-              <p className="text-slate-600">東岸町自治会</p>
+              <p className="text-slate-600">東岸町自治会（〒330-0054 埼玉県さいたま市浦和区東岸町3-7）</p>
             </div>
             <div className="overflow-hidden rounded-3xl">
               <iframe

@@ -57,6 +57,14 @@ const organizationJsonLd = {
   description:
     "さいたま市浦和区東岸町の住民組織。防犯・環境美化・コミュニティイベントなど地域の安全と快適な生活を目的とした自治会です。",
   email: "urawa-higashikishi@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    postalCode: "330-0054",
+    addressRegion: "埼玉県",
+    addressLocality: "さいたま市浦和区東岸町",
+    streetAddress: "3-7",
+    addressCountry: "JP",
+  },
   areaServed: {
     "@type": "AdministrativeArea",
     name: "さいたま市浦和区東岸町",
