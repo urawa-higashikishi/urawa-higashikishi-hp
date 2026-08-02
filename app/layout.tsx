@@ -69,6 +69,11 @@ const organizationJsonLd = {
     "@type": "AdministrativeArea",
     name: "さいたま市浦和区東岸町",
   },
+  memberOf: {
+    "@type": "Organization",
+    name: "浦和区自治会連合会",
+    url: "https://u-jichiren.ciao.jp/",
+  },
 };
 export default function RootLayout({
   children,

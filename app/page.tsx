@@ -731,6 +731,8 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">リンク</h4>
               <ul className="text-slate-300 space-y-1">
                 <li><Link href="/privacy" className="hover:text-white">プライバシーポリシー</Link></li>
+                <li><a href="https://www.city.saitama.lg.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-white">さいたま市公式サイト</a></li>
+                <li><a href="https://u-jichiren.ciao.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-white">浦和区自治会連合会</a></li>
               </ul>
             </div>
           </div>
