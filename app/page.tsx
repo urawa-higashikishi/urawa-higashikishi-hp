@@ -50,6 +50,14 @@ function parseSingleColumnCsv(csv: string): string[] {
 
 type DriveImageFile = { id: string; name: string; mimeType: string; thumbnailLink?: string };
 
+// GA4にクリックイベントを送信する（gtagが読み込まれていない場合は何もしない）
+function trackEvent(eventName: string, params?: Record<string, string>) {
+  const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, params);
+  }
+}
+
 // 指定したGoogleドライブフォルダ内のファイル一覧を取得する（回覧板・活動写真ギャラリーで共用）
 // mimeQueryで対象ファイルの種類を絞り込む（省略時は画像のみ）
 function useDriveImageFolder(folderId: string, mimeQuery: string = "mimeType contains 'image/'") {
@@ -488,7 +496,13 @@ export default function Home() {
                         const isExpanded = expandedPdfIds.has(file.id);
                         return (
                           <div key={file.id} className="overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-lg bg-white">
-                            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="block">
+                            <a
+                              href={downloadHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block"
+                              onClick={() => trackEvent('newsletter_click', { file_name: file.name, file_type: isPdf ? 'pdf' : 'image' })}
+                            >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src={thumbSrc}
@@ -503,7 +517,12 @@ export default function Home() {
                                   <p className="text-slate-500 text-xs">PDF資料（画像タップでダウンロード）: {file.name}</p>
                                   <button
                                     type="button"
-                                    onClick={() => togglePdfExpanded(file.id)}
+                                    onClick={() => {
+                                      if (!isExpanded) {
+                                        trackEvent('newsletter_pdf_expand', { file_name: file.name });
+                                      }
+                                      togglePdfExpanded(file.id);
+                                    }}
                                     className="shrink-0 text-orange-600 text-xs font-semibold underline hover:text-orange-700"
                                   >
                                     {isExpanded ? '閉じる' : '全ページを表示'}
