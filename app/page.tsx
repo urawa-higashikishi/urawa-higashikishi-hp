@@ -393,27 +393,62 @@ export default function Home() {
 
       {/* バナーコーナー */}
       {!bannerLoading && orderedBannerFiles.length > 0 && (
-        <section className="py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-lg font-bold text-slate-900 mb-1">お知らせバナー</h2>
-            <p className="text-slate-500 text-sm mb-4">タップ・クリックすると拡大表示できます。</p>
-            {/* モバイル: 1枚ずつスワイプするカルーセル */}
-            <div className="md:hidden">
-              <div
-                ref={bannerScrollRef}
-                onScroll={handleBannerScroll}
-                className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+            <div className={SECTION_CARD_LG}>
+              <h3 className="text-3xl font-bold text-slate-900 mb-2 text-center">お知らせバナー</h3>
+              <p className="text-slate-500 text-sm mb-10 text-center">タップ・クリックすると拡大表示できます。</p>
+              {/* モバイル: 1枚ずつスワイプするカルーセル */}
+              <div className="md:hidden">
+                <div
+                  ref={bannerScrollRef}
+                  onScroll={handleBannerScroll}
+                  className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  {orderedBannerFiles.map((file) => (
+                    <button
+                      key={file.id}
+                      type="button"
+                      onClick={() => setSelectedBannerId(file.id)}
+                      className="w-full shrink-0 snap-center aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
+                        alt="東岸町自治会 お知らせバナー"
+                        loading="lazy"
+                        className="w-full h-full object-contain"
+                      />
+                    </button>
+                  ))}
+                </div>
+                {orderedBannerFiles.length > 1 && (
+                  <div className="flex justify-center gap-2 mt-3">
+                    {orderedBannerFiles.map((file, i) => (
+                      <button
+                        key={file.id}
+                        type="button"
+                        aria-label={`バナー${i + 1}へ移動`}
+                        onClick={() => scrollToBanner(i)}
+                        className={`h-2 w-2 rounded-full transition-colors ${i === bannerIndex ? 'bg-orange-500' : 'bg-slate-300'}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* PC: 4列グリッド */}
+              <div className="hidden md:grid md:grid-cols-4 gap-4">
                 {orderedBannerFiles.map((file) => (
                   <button
                     key={file.id}
                     type="button"
                     onClick={() => setSelectedBannerId(file.id)}
-                    className="w-full shrink-0 snap-center aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
+                    className="aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
+                      src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
                       alt="東岸町自治会 お知らせバナー"
                       loading="lazy"
                       className="w-full h-full object-contain"
@@ -421,39 +456,6 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-              {orderedBannerFiles.length > 1 && (
-                <div className="flex justify-center gap-2 mt-3">
-                  {orderedBannerFiles.map((file, i) => (
-                    <button
-                      key={file.id}
-                      type="button"
-                      aria-label={`バナー${i + 1}へ移動`}
-                      onClick={() => scrollToBanner(i)}
-                      className={`h-2 w-2 rounded-full transition-colors ${i === bannerIndex ? 'bg-orange-500' : 'bg-slate-300'}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* PC: 4列グリッド */}
-            <div className="hidden md:grid md:grid-cols-4 gap-4">
-              {orderedBannerFiles.map((file) => (
-                <button
-                  key={file.id}
-                  type="button"
-                  onClick={() => setSelectedBannerId(file.id)}
-                  className="aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
-                    alt="東岸町自治会 お知らせバナー"
-                    loading="lazy"
-                    className="w-full h-full object-contain"
-                  />
-                </button>
-              ))}
             </div>
           </div>
         </section>
