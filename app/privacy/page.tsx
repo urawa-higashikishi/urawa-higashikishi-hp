@@ -53,7 +53,7 @@ export default function PrivacyPolicy() {
             <p className="mt-2">
               東岸町自治会
               <br />
-              メール: urawa-higashikishi@gmail.com
+              メール: urawa.higashikishi@gmail.com
             </p>
           </div>
         </div>

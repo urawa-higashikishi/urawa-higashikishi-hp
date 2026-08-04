@@ -140,6 +140,20 @@ export default function Home() {
   const { files: bannerFiles, loading: bannerLoading } = useDriveImageFolder(BANNER_FOLDER_ID);
   const orderedBannerFiles = [...bannerFiles].reverse();
   const [selectedBannerId, setSelectedBannerId] = useState<string | null>(null);
+  const [bannerIndex, setBannerIndex] = useState(0);
+  const bannerScrollRef = useRef<HTMLDivElement>(null);
+  const scrollToBanner = (index: number) => {
+    const container = bannerScrollRef.current;
+    if (!container) return;
+    const child = container.children[index];
+    child?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+  const handleBannerScroll = () => {
+    const container = bannerScrollRef.current;
+    if (!container) return;
+    const index = Math.round(container.scrollLeft / container.clientWidth);
+    setBannerIndex(index);
+  };
   const [expandedPdfIds, setExpandedPdfIds] = useState<Set<string>>(new Set());
   const togglePdfExpanded = (id: string) => {
     setExpandedPdfIds((prev) => {
@@ -380,8 +394,48 @@ export default function Home() {
       {/* バナーコーナー */}
       {!bannerLoading && orderedBannerFiles.length > 0 && (
         <section className="py-8">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* モバイル: 1枚ずつスワイプするカルーセル */}
+            <div className="md:hidden">
+              <div
+                ref={bannerScrollRef}
+                onScroll={handleBannerScroll}
+                className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {orderedBannerFiles.map((file) => (
+                  <button
+                    key={file.id}
+                    type="button"
+                    onClick={() => setSelectedBannerId(file.id)}
+                    className="w-full shrink-0 snap-center aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
+                      alt="東岸町自治会 お知らせバナー"
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+              {orderedBannerFiles.length > 1 && (
+                <div className="flex justify-center gap-2 mt-3">
+                  {orderedBannerFiles.map((file, i) => (
+                    <button
+                      key={file.id}
+                      type="button"
+                      aria-label={`バナー${i + 1}へ移動`}
+                      onClick={() => scrollToBanner(i)}
+                      className={`h-2 w-2 rounded-full transition-colors ${i === bannerIndex ? 'bg-orange-500' : 'bg-slate-300'}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* PC: 4列グリッド */}
+            <div className="hidden md:grid md:grid-cols-4 gap-4">
               {orderedBannerFiles.map((file) => (
                 <button
                   key={file.id}
@@ -394,7 +448,7 @@ export default function Home() {
                     src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
                     alt="東岸町自治会 お知らせバナー"
                     loading="lazy"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </button>
               ))}
@@ -811,7 +865,7 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">連絡先</h4>
-              <p className="text-slate-300">メール: urawa-higashikishi@gmail.com</p>
+              <p className="text-slate-300">メール: urawa.higashikishi@gmail.com</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">リンク</h4>
