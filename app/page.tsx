@@ -867,7 +867,9 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">連絡先</h4>
-              <p className="text-slate-300">メール: urawa.higashikishi@gmail.com</p>
+              <p className="text-slate-300">
+                メール: <a href="mailto:urawa.higashikishi@gmail.com" className="hover:text-white underline">urawa.higashikishi@gmail.com</a>
+              </p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">リンク</h4>
