@@ -138,6 +138,8 @@ export default function Home() {
   );
   const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
   const { files: bannerFiles, loading: bannerLoading } = useDriveImageFolder(BANNER_FOLDER_ID);
+  const orderedBannerFiles = [...bannerFiles].reverse();
+  const [selectedBannerId, setSelectedBannerId] = useState<string | null>(null);
   const [expandedPdfIds, setExpandedPdfIds] = useState<Set<string>>(new Set());
   const togglePdfExpanded = (id: string) => {
     setExpandedPdfIds((prev) => {
@@ -376,21 +378,53 @@ export default function Home() {
       </section>
 
       {/* バナーコーナー */}
-      {!bannerLoading && bannerFiles.length > 0 && (
+      {!bannerLoading && orderedBannerFiles.length > 0 && (
         <section className="py-8">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            {bannerFiles.map((file) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={file.id}
-                src={`https://lh3.googleusercontent.com/d/${file.id}=w1600`}
-                alt="東岸町自治会 お知らせバナー"
-                loading="lazy"
-                className="w-full h-auto rounded-2xl shadow-md border border-slate-200"
-              />
-            ))}
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {orderedBannerFiles.map((file) => (
+                <button
+                  key={file.id}
+                  type="button"
+                  onClick={() => setSelectedBannerId(file.id)}
+                  className="aspect-video overflow-hidden rounded-xl shadow-md border border-slate-200 bg-white"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
+                    alt="東岸町自治会 お知らせバナー"
+                    loading="lazy"
+                    className="w-full h-full object-contain"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         </section>
+      )}
+
+      {/* バナー拡大モーダル */}
+      {selectedBannerId && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setSelectedBannerId(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedBannerId(null)}
+            aria-label="閉じる"
+            className="absolute top-4 right-4 text-white hover:text-orange-300"
+          >
+            <X className="h-8 w-8" />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://lh3.googleusercontent.com/d/${selectedBannerId}=w2400`}
+            alt="東岸町自治会 お知らせバナー拡大表示"
+            className="max-w-full max-h-full rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
 
       {/* 自治会紹介 */}
