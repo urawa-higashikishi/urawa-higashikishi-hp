@@ -18,6 +18,9 @@ const NEWSLETTER_FOLDER_ID = '1uZOSaX9REpjBdHkb0emEuU6xhjZnzy5f';
 // 活動写真ギャラリーも同様に下記フォルダの中身（画像ファイル）を一覧表示します
 // https://drive.google.com/drive/folders/1OjcGJ9RGWel0eAbcrb934jCQ2zL6LZJN
 const GALLERY_FOLDER_ID = '1OjcGJ9RGWel0eAbcrb934jCQ2zL6LZJN';
+// バナーコーナーも同様に下記フォルダの中身（画像ファイル）を一覧表示します
+// https://drive.google.com/drive/folders/1DygNzcv5LSZBa14hKQ42grcRVJVs6DGu
+const BANNER_FOLDER_ID = '1DygNzcv5LSZBa14hKQ42grcRVJVs6DGu';
 // Google Cloud Consoleで発行したAPIキー（HTTPリファラーをこのサイトのURLに制限済み・Google Drive APIのみ許可）
 const DRIVE_API_KEY = 'AIzaSyCq3qVMFzyXS3lqsbNqwSEWcuolQiphbSY';
 const NEWSLETTER_FOLDER_URL = `https://drive.google.com/drive/folders/${NEWSLETTER_FOLDER_ID}`;
@@ -134,6 +137,7 @@ export default function Home() {
     "mimeType contains 'image/' or mimeType = 'application/pdf'"
   );
   const { files: galleryFiles, loading: galleryLoading, error: galleryError } = useDriveImageFolder(GALLERY_FOLDER_ID);
+  const { files: bannerFiles, loading: bannerLoading } = useDriveImageFolder(BANNER_FOLDER_ID);
   const [expandedPdfIds, setExpandedPdfIds] = useState<Set<string>>(new Set());
   const togglePdfExpanded = (id: string) => {
     setExpandedPdfIds((prev) => {
@@ -370,6 +374,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* バナーコーナー */}
+      {!bannerLoading && bannerFiles.length > 0 && (
+        <section className="py-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            {bannerFiles.map((file) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={file.id}
+                src={`https://lh3.googleusercontent.com/d/${file.id}=w1600`}
+                alt="東岸町自治会 お知らせバナー"
+                loading="lazy"
+                className="w-full h-auto rounded-2xl shadow-md border border-slate-200"
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 自治会紹介 */}
       <section id="about" className="py-16">
