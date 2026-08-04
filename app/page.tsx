@@ -395,6 +395,8 @@ export default function Home() {
       {!bannerLoading && orderedBannerFiles.length > 0 && (
         <section className="py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-lg font-bold text-slate-900 mb-1">お知らせバナー</h2>
+            <p className="text-slate-500 text-sm mb-4">タップ・クリックすると拡大表示できます。</p>
             {/* モバイル: 1枚ずつスワイプするカルーセル */}
             <div className="md:hidden">
               <div
@@ -414,7 +416,7 @@ export default function Home() {
                       src={`https://lh3.googleusercontent.com/d/${file.id}=w1200`}
                       alt="東岸町自治会 お知らせバナー"
                       loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}
@@ -448,7 +450,7 @@ export default function Home() {
                     src={`https://lh3.googleusercontent.com/d/${file.id}=w600`}
                     alt="東岸町自治会 お知らせバナー"
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </button>
               ))}
