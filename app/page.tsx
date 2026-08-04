@@ -154,6 +154,12 @@ export default function Home() {
     const index = Math.round(container.scrollLeft / container.clientWidth);
     setBannerIndex(index);
   };
+  const showAdjacentBanner = (direction: number) => {
+    const currentIndex = orderedBannerFiles.findIndex((file) => file.id === selectedBannerId);
+    if (currentIndex === -1) return;
+    const nextIndex = (currentIndex + direction + orderedBannerFiles.length) % orderedBannerFiles.length;
+    setSelectedBannerId(orderedBannerFiles[nextIndex].id);
+  };
   const [expandedPdfIds, setExpandedPdfIds] = useState<Set<string>>(new Set());
   const togglePdfExpanded = (id: string) => {
     setExpandedPdfIds((prev) => {
@@ -475,6 +481,32 @@ export default function Home() {
           >
             <X className="h-8 w-8" />
           </button>
+          {orderedBannerFiles.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showAdjacentBanner(-1);
+                }}
+                aria-label="前のバナー"
+                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white hover:text-orange-300"
+              >
+                <ChevronLeft className="h-10 w-10" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showAdjacentBanner(1);
+                }}
+                aria-label="次のバナー"
+                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:text-orange-300"
+              >
+                <ChevronRight className="h-10 w-10" />
+              </button>
+            </>
+          )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://lh3.googleusercontent.com/d/${selectedBannerId}=w2400`}
