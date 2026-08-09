@@ -364,7 +364,7 @@ export default function Home() {
               {/* 自治会名と地名のセット */}
               <div className="flex flex-col justify-between h-14 py-0.5 ml-3">
                 {/* さいたま市浦和区（赤またはオレンジの長丸） */}
-                <span className="w-full bg-red-600 text-white text-xs px-2 py-0.5 rounded-full font-bold tracking-wider shadow-sm text-center flex items-center justify-center">
+                <span className="w-full bg-blue-950 text-white text-xs px-2 py-0.5 rounded-full font-bold tracking-wider shadow-sm text-center flex items-center justify-center">
                   さいたま市浦和区
                 </span>
                 {/* 自治会名 */}
@@ -936,7 +936,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-orange-950 text-white pt-8 pb-20 md:pb-8">
+      <footer className="bg-blue-950 text-white pt-8 pb-20 md:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
