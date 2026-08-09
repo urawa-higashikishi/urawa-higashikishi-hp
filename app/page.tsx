@@ -382,7 +382,7 @@ export default function Home() {
         {/* コンテンツ */}
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className="relative overflow-hidden md:rounded-[2.5rem] border-0 md:border border-orange-100 bg-transparent md:bg-white md:shadow-xl p-6 py-12 md:p-14 text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">住民同士が支え合う、<br className="md:hidden" />安心して暮らせる<br className="md:hidden" />東岸町へ</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">住民同士が支え合う、<br className="md:hidden" />安心して暮らせる<br className="md:hidden" />東岸町へ</h2>
             <p className="mx-auto max-w-2xl text-xl text-slate-600 mb-10">防犯・防災・清掃など、地域のさまざまな活動を通じて、住みよいまちづくりに取り組んでいます。</p>
             <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSebnKdQUw8PjZQhKV2C-TzwLQLfb7I5PoISq7BdWAXzJYseUg/viewform?usp=publish-editor"
@@ -701,26 +701,26 @@ export default function Home() {
           <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold text-orange-600 mb-4">加入するメリット</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
-            <div className="space-y-8">
-              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Shield className="h-7 w-7" />
+            <div className="grid sm:grid-cols-3 gap-6">
+              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <Shield className="h-6 w-6 text-orange-600" />
+                  <h4 className="text-lg font-semibold text-slate-900">安全・安心</h4>
                 </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">安全・安心</h4>
                 <p className="text-slate-600">防犯活動により、地域の安心を守ります。</p>
               </div>
-              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Heart className="h-7 w-7" />
+              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <Heart className="h-6 w-6 text-orange-600" />
+                  <h4 className="text-lg font-semibold text-slate-900">コミュニティ</h4>
                 </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">コミュニティ</h4>
                 <p className="text-slate-600">住民同士のつながりを深め、助け合いを育みます。</p>
               </div>
-              <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-sm">
-                  <Users className="h-7 w-7" />
+              <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <Users className="h-6 w-6 text-orange-600" />
+                  <h4 className="text-lg font-semibold text-slate-900">イベント参加</h4>
                 </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">イベント参加</h4>
                 <p className="text-slate-600">様々な行事に参加し、充実した時間を過ごせます。</p>
               </div>
             </div>
