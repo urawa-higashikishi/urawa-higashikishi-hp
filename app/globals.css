@@ -12,11 +12,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* アクセシビリティ: 高コントラスト表示（背景・文字色を反転し、写真だけ反転を打ち消して自然な見た目にする） */
+/* アクセシビリティ: 見やすい表示（ダーク系）。真っ黒×真っ白の反転はコントラストが強すぎて
+   かえって見づらいため、contrast()で反転後の黒・白を柔らかいダークグレー・オフホワイトに寄せる。
+   写真は反転を打ち消しつつ、同じcontrast分だけ逆補正して自然な色味に戻す */
 html.high-contrast {
-  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1) hue-rotate(180deg) contrast(0.75);
 }
 html.high-contrast img,
 html.high-contrast iframe {
-  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1) hue-rotate(180deg) contrast(1.333);
 }
