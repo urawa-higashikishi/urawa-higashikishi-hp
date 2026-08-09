@@ -24,3 +24,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* アクセシビリティ: 高コントラスト表示（背景・文字色を反転し、写真だけ反転を打ち消して自然な見た目にする） */
+html.high-contrast {
+  filter: invert(1) hue-rotate(180deg);
+}
+html.high-contrast img,
+html.high-contrast iframe {
+  filter: invert(1) hue-rotate(180deg);
+}
