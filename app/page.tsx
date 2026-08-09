@@ -890,7 +890,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-orange-950 text-white py-8">
+      <footer className="bg-orange-950 text-white pt-8 pb-20 md:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
@@ -921,12 +921,13 @@ export default function Home() {
       {showTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm border border-orange-200 p-3 rounded-2xl shadow-xl hover:bg-white hover:scale-110 transition-all animate-in fade-in slide-in-from-bottom-10 duration-500 group"
+          aria-label="ページ上部へ戻る"
+          className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex h-11 w-11 md:h-auto md:w-auto flex-col items-center justify-center bg-white/90 backdrop-blur-sm border border-orange-200 md:p-3 rounded-full md:rounded-2xl shadow-lg md:shadow-xl hover:bg-white transition-all group"
         >
-          <div className="text-orange-500 mb-1 group-hover:-translate-y-1 transition-transform">
-            <ChevronDown size={24} className="rotate-180" />
+          <div className="text-orange-500 md:mb-1 group-hover:-translate-y-1 transition-transform">
+            <ChevronDown size={20} className="rotate-180" />
           </div>
-          <span className="text-[10px] font-black text-orange-600 tracking-tighter">PAGE TOP</span>
+          <span className="hidden md:block text-[10px] font-black text-orange-600 tracking-tighter">PAGE TOP</span>
         </button>
       )}
     </div>
