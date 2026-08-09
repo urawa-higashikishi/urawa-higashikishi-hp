@@ -382,15 +382,13 @@ export default function Home() {
         {/* コンテンツ */}
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className="relative overflow-hidden md:rounded-[2.5rem] border-0 md:border border-orange-100 bg-transparent md:bg-white md:shadow-xl p-6 py-12 md:p-14 text-center">
-            <div className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-orange-100 opacity-80 blur-2xl"></div>
-            <p className="relative inline-flex items-center rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700 mb-6">地域のつながりを育む</p>
-            <h2 className="relative text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">つながりを育む。<br className="md:hidden" />安全で安心な<br className="md:hidden" />地域づくり</h2>
-            <p className="relative mx-auto max-w-2xl text-xl text-slate-600 mb-10">住民一人ひとりが支え合う、活気に満ちた東岸町の暮らしを創造します。</p>
-            <a 
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">住民同士が支え合う、<br className="md:hidden" />安心して暮らせる<br className="md:hidden" />東岸町へ</h2>
+            <p className="mx-auto max-w-2xl text-xl text-slate-600 mb-10">防犯・防災・清掃など、地域のさまざまな活動を通じて、住みよいまちづくりに取り組んでいます。</p>
+            <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSebnKdQUw8PjZQhKV2C-TzwLQLfb7I5PoISq7BdWAXzJYseUg/viewform?usp=publish-editor"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-600 transition hover:scale-105">
+            className="inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-600 transition">
               入会のお問い合わせ
             </a>
           </div>
@@ -521,7 +519,7 @@ export default function Home() {
       <section id="about" className="py-16">
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className={SECTION_CARD_LG}>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の主な活動</p>
+            <p className="text-sm font-semibold text-orange-600 mb-4">自治会の主な活動</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
             <div className="mb-10 bg-orange-50 border-l-4 border-orange-400 rounded-r-2xl p-6 md:p-8">
               <h4 className="text-lg font-semibold text-slate-900 mb-3">会長からのご挨拶</h4>
@@ -580,7 +578,7 @@ export default function Home() {
       <section id="news" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 p-0 md:p-12">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">自治会の最新情報</p>
+            <p className="text-sm font-semibold text-orange-600 mb-4">自治会の最新情報</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">最新のお知らせ</h3>
             <div className="space-y-8">
               <div className="bg-slate-50 p-2 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
@@ -701,7 +699,7 @@ export default function Home() {
       <section id="benefits" className="py-16">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_LG}>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500 mb-4">加入するメリット</p>
+            <p className="text-sm font-semibold text-orange-600 mb-4">加入するメリット</p>
             <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
             <div className="space-y-8">
               <div className="bg-slate-50 p-8 rounded-[2rem] shadow-lg border border-slate-200 text-center">
