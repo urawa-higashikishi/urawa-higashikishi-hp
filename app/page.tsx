@@ -29,10 +29,10 @@ const NEWSLETTER_FOLDER_URL = `https://drive.google.com/drive/folders/${NEWSLETT
 const SECTION_CARD_LG = 'md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12';
 const SECTION_CARD_SM = 'md:rounded-3xl bg-transparent md:bg-white border-0 md:border md:shadow-sm border-slate-200 px-6 py-10 md:p-10';
 
-const DEFAULT_ANNOUNCEMENTS = [
-  '（仮）2026年夏祭りの開催日が決定しました。',
-  '（仮）新年度の入会受付を開始します。',
-  '（仮）防犯パトロールの参加者を募集しています。',
+// お知らせの取得に失敗した場合・スプレッドシートが空の場合に表示するフォールバック文言
+// （架空の活動を実在するお知らせのように見せないよう、正直な案内文のみにする）
+const FALLBACK_ANNOUNCEMENTS = [
+  '現在お知らせを取得できませんでした。しばらくしてから再度アクセスしてください。',
 ];
 
 // 1行1セルのシンプルなCSV（ダブルクォート囲み・""エスケープのみ）を前提にした最小限のパーサー
@@ -137,14 +137,14 @@ export default function Home() {
       .then((csv) => {
         const parsed = parseSingleColumnCsv(csv);
         if (!cancelled) {
-          setAnnouncements(parsed.length > 0 ? parsed : DEFAULT_ANNOUNCEMENTS);
+          setAnnouncements(parsed.length > 0 ? parsed : FALLBACK_ANNOUNCEMENTS);
           setAnnouncementsLoading(false);
         }
       })
       .catch(() => {
-        // 取得に失敗した場合は既定のお知らせ（DEFAULT_ANNOUNCEMENTS）を表示する
+        // 取得に失敗した場合は正直なフォールバック文言（FALLBACK_ANNOUNCEMENTS）を表示する
         if (!cancelled) {
-          setAnnouncements(DEFAULT_ANNOUNCEMENTS);
+          setAnnouncements(FALLBACK_ANNOUNCEMENTS);
           setAnnouncementsLoading(false);
         }
       });
@@ -337,11 +337,11 @@ export default function Home() {
       <header className="sticky top-0 z-30 shadow-lg w-full overflow-hidden h-24">
         {/* 背景画像レイヤー */}
         <div className="absolute inset-0 z-0">
-            <Image 
+            <Image
             src="/header-bg.png"
-            alt="背景" 
-            fill 
-            className="object-cover object-center opacity-50" 
+            alt=""
+            fill
+            className="object-cover object-center opacity-50"
             priority
           />
           {/* 白いもやをかけて文字を読みやすくする（backdrop-blurとの相性抜群） */}
@@ -423,12 +423,11 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      {/* <section className="py-24"> */}
       <section className="relative py-24">
         {/* コンテンツ */}
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className="relative overflow-hidden md:rounded-[2.5rem] border-0 md:border border-orange-100 bg-transparent md:bg-white md:shadow-xl p-6 py-12 md:p-14 text-center">
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">住民同士が支え合う、<br className="md:hidden" />安心して暮らせる<br className="md:hidden" />東岸町へ</h2>
+            <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">住民同士が支え合う、<br className="md:hidden" />安心して暮らせる<br className="md:hidden" />東岸町へ</h2>
             <p className="mx-auto max-w-2xl text-xl text-slate-600 mb-10">防犯・防災・清掃など、地域のさまざまな活動を通じて、住みよいまちづくりに取り組んでいます。</p>
             <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSebnKdQUw8PjZQhKV2C-TzwLQLfb7I5PoISq7BdWAXzJYseUg/viewform?usp=publish-editor"
@@ -446,7 +445,7 @@ export default function Home() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
             <div className={SECTION_CARD_LG}>
-              <h3 className="text-3xl font-bold text-slate-900 mb-2 text-center">お知らせバナー</h3>
+              <h3 className="font-heading text-3xl font-bold text-slate-900 mb-2 text-center">お知らせバナー</h3>
               <p className="text-slate-500 text-sm mb-10 text-center">タップ・クリックすると拡大表示できます。</p>
               {/* モバイル: 1枚ずつスワイプするカルーセル */}
               <div className="md:hidden">
@@ -566,7 +565,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
           <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold text-orange-600 mb-4">自治会の主な活動</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-10 text-center">自治会紹介</h3>
             <div className="mb-10 bg-orange-50 border-l-4 border-orange-400 rounded-r-2xl p-6 md:p-8">
               <h4 className="text-lg font-semibold text-slate-900 mb-3">会長からのご挨拶</h4>
               <p className="text-slate-700 leading-relaxed">
@@ -623,11 +622,11 @@ export default function Home() {
       {/* お知らせ＆PDF */}
       <section id="news" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 md:px-6 lg:px-8">
-          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 p-0 md:p-12">
+          <div className="md:rounded-[2.5rem] bg-transparent md:bg-white md:shadow-lg border-0 md:border border-slate-200 px-6 py-12 md:p-12">
             <p className="text-sm font-semibold text-orange-600 mb-4">自治会の最新情報</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">最新のお知らせ</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-10 text-center">最新のお知らせ</h3>
             <div className="space-y-8">
-              <div className="bg-slate-50 p-2 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
+              <div className="bg-slate-50 p-4 md:p-10 rounded-2xl md:rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     <Bell className="h-6 w-6" />
@@ -647,7 +646,7 @@ export default function Home() {
                   )}
                 </ul>
               </div>
-              <div className="bg-slate-50 p-0 md:p-10 rounded-none md:rounded-[2rem] shadow-lg border-x-0 md:border border-slate-200">
+              <div className="bg-slate-50 p-4 md:p-10 rounded-2xl md:rounded-[2rem] shadow-lg border border-slate-200">
                 <div className="flex items-center mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 mr-3">
                     {/* アイコンをカレンダーやダウンロードからフォルダ（回覧用）に変更 */}
@@ -746,7 +745,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_LG}>
             <p className="text-sm font-semibold text-orange-600 mb-4">加入するメリット</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-10 text-center">自治会に入会する<br className="sm:hidden" />メリット</h3>
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
                 <div className="flex items-center gap-3 mb-3">
@@ -778,7 +777,7 @@ export default function Home() {
       <section id="events" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_SM}>
-            <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-8 text-center">行事予定</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {events.map((event, index) => (
                 <div key={index} className="bg-slate-50 p-6 rounded-3xl shadow-sm border border-slate-200">
@@ -800,7 +799,7 @@ export default function Home() {
       <section id="gallery" className="py-16">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_LG}>
-            <h3 className="text-3xl font-bold text-slate-900 mb-10 text-center">活動の様子</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-10 text-center">活動の様子</h3>
             {galleryLoading ? (
               <p className="text-slate-400 text-sm text-center">読み込み中…</p>
             ) : galleryError ? (
@@ -872,7 +871,7 @@ export default function Home() {
         />
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_SM}>
-            <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">よくある質問</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-8 text-center">よくある質問</h3>
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-slate-50 rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -905,7 +904,7 @@ export default function Home() {
       <section id="map" className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className={SECTION_CARD_SM}>
-            <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
+            <h3 className="font-heading text-3xl font-bold text-slate-900 mb-8 text-center">アクセス</h3>
             <div className="flex items-center justify-center mb-4">
               <MapPin className="h-6 w-6 text-orange-600 mr-2" />
               <p className="text-slate-600">東岸町自治会（〒330-0054 埼玉県さいたま市浦和区東岸町3-7）</p>

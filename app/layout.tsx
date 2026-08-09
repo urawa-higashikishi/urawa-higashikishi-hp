@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Shippori_Mincho } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
@@ -13,6 +13,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// 見出し用の明朝体（本文はシステムフォントのまま、見出しだけ表情をつける）
+const shipporiMincho = Shippori_Mincho({
+  weight: ["600", "800"],
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -86,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja" // 英語(en)から日本語(ja)に変更
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${shipporiMincho.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}
