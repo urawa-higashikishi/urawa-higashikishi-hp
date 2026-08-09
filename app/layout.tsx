@@ -44,6 +44,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ url: "/favicon-icon.png", sizes: "192x192", type: "image/png" }],
   },
+  verification: {
+    google: "WkyIO3zRBF_i7UaFAiUcQuaLnTil6fPemqLrC7Ck__8",
+  },
 };
 
 // AIやAI検索エンジンがサイトの主体を正しく識別できるようにする構造化データ
