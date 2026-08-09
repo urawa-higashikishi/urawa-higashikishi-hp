@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import Script from "next/script";
+import AccessibilityBar from "./components/AccessibilityBar";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import "./globals.css";
 
 const GA_MEASUREMENT_ID = "G-E6DEGPSZ4M";
@@ -96,8 +100,12 @@ export default function RootLayout({
       lang="ja" // 英語(en)から日本語(ja)に変更
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-amber-50">
+        <AccessibilityBar />
+        <SiteHeader />
         {children}
+        <SiteFooter />
+        <ScrollToTopButton />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Calendar, MapPin, ChevronDown, ChevronLeft, ChevronRight, Download, Users, Shield, Heart, Menu, X, Sprout, Gift, PartyPopper, Sun, Type, Contrast } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Bell, Calendar, MapPin, ChevronDown, ChevronLeft, ChevronRight, Download, Users, Shield, Heart, X, Sprout, Gift, PartyPopper, Sun } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const PdfViewer = dynamic(() => import('./components/PdfViewer'), { ssr: false });
@@ -101,31 +99,6 @@ function useDriveImageFolder(folderId: string, mimeQuery: string = "mimeType con
 }
 
 export default function Home() {
-    // スクロール位置を管理する状態
-    const [showTop, setShowTop] = useState(false);
-
-  // アクセシビリティ設定（文字サイズ・高コントラスト）。ローカルストレージに保存し次回訪問時も維持する
-  const [largeText, setLargeText] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
-
-  useEffect(() => {
-    // ローカルストレージ（クライアント専用）から読み込むため、SSR/静的書き出し時とのハイドレーション不一致を避けるべく
-    // マウント後にここで一度だけ反映する
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLargeText(localStorage.getItem('a11y-large-text') === 'true');
-    setHighContrast(localStorage.getItem('a11y-high-contrast') === 'true');
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.fontSize = largeText ? '118%' : '';
-    localStorage.setItem('a11y-large-text', String(largeText));
-  }, [largeText]);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('high-contrast', highContrast);
-    localStorage.setItem('a11y-high-contrast', String(highContrast));
-  }, [highContrast]);
-
   const [announcements, setAnnouncements] = useState<string[]>([]);
   const [announcementsLoading, setAnnouncementsLoading] = useState(true);
 
@@ -199,27 +172,10 @@ export default function Home() {
     galleryScrollRef.current?.scrollBy({ left: direction * 320, behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // 400px以上スクロールしたらボタンを表示
-      setShowTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const faqs = [
@@ -308,120 +264,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-amber-50">
-      {/* 表示設定バー（文字サイズ・高コントラスト切替） */}
-      <div className="bg-slate-800 text-white text-xs sm:text-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-end gap-2 sm:gap-4">
-          <span className="hidden sm:inline text-slate-400">表示設定:</span>
-          <button
-            type="button"
-            onClick={() => setLargeText((v) => !v)}
-            aria-pressed={largeText}
-            className="flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-700 transition"
-          >
-            <Type className="h-4 w-4" />
-            文字サイズ{largeText ? '標準' : '拡大'}
-          </button>
-          <button
-            type="button"
-            onClick={() => setHighContrast((v) => !v)}
-            aria-pressed={highContrast}
-            className="flex items-center gap-1 px-2 py-1 rounded hover:bg-slate-700 transition"
-          >
-            <Contrast className="h-4 w-4" />
-            {highContrast ? '通常表示' : '高コントラスト'}
-          </button>
-        </div>
-      </div>
-      {/* Header */}
-      <header className="sticky top-0 z-30 shadow-lg w-full overflow-hidden h-24">
-        {/* 背景画像レイヤー */}
-        <div className="absolute inset-0 z-0">
-            <Image
-            src="/header-bg.png"
-            alt=""
-            fill
-            className="object-cover object-center opacity-50"
-            priority
-          />
-          {/* 白いもやをかけて文字を読みやすくする（backdrop-blurとの相性抜群） */}
-          <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px]" />
-        </div>
-        {/* コンテンツレイヤー */}
-        <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="flex justify-between items-center w-full">
-            {/* 左側：ロゴとサイトタイトル */}
-            <div className="flex items-center">
-              {/* 作成したロゴを表示 */}
-              <div className="relative w-16 h-16 overflow-hidden rounded-lg shadow-sm border border-white/80">
-                <Image 
-                  src="/favicon.png"
-                  alt="東岸町自治会 紋章" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              {/* 自治会名と地名のセット */}
-              <div className="flex flex-col justify-between h-14 py-0.5 ml-3">
-                {/* さいたま市浦和区（赤またはオレンジの長丸） */}
-                <span className="w-full bg-blue-950 text-white text-xs px-2 py-0.5 rounded-full font-bold tracking-wider shadow-sm text-center flex items-center justify-center">
-                  さいたま市浦和区
-                </span>
-                {/* 自治会名 */}
-                <h1 className="text-2xl font-bold text-slate-900 leading-none drop-shadow-sm whitespace-nowrap">
-                  東岸町自治会
-                </h1>
-              </div>
-            </div>
-            <nav className="hidden md:flex space-x-6 text-slate-800 font-bold">
-              <a href="#about" className="hover:text-orange-700 transition drop-shadow-sm">自治会紹介</a>
-              <a href="#news" className="hover:text-orange-700 transition drop-shadow-sm">お知らせ</a>
-              <a href="#events" className="hover:text-orange-700 transition drop-shadow-sm">行事予定</a>
-              <a href="#gallery" className="hover:text-orange-700 transition drop-shadow-sm">活動の様子</a>
-              <a href="#benefits" className="hover:text-orange-700 transition drop-shadow-sm">入会メリット</a>
-              <a href="#faq" className="hover:text-orange-700 transition drop-shadow-sm">よくある質問</a>
-              <a href="#map" className="hover:text-orange-700 transition drop-shadow-sm">アクセス</a>
-            </nav>
-            {/* 右側：モバイル用メニューボタン */}
-            <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMobileMenu} className="z-50 p-2">
-              {/* ボタンのアイコン切り替え */}
-                  {mobileMenuOpen ? (
-                   <X size={28} className="text-orange-700" />
-                   ) : (
-                      <Menu size={28} className="text-orange-700" />
-                   )}
-              </button>
-              {mobileMenuOpen && (
-                <div className="fixed inset-x-0 top-24 bg-white/95 backdrop-blur-md border-b border-orange-100 shadow-2xl z-40 animate-in fade-in slide-in-from-top-5 duration-300">
-                  <nav className="flex flex-col p-6 space-y-2">
-                    {[
-                      { name: "自治会紹介", href: "#about" },
-                      { name: "お知らせ", href: "#news" },
-                      { name: "行事予定", href: "#events" },
-                      { name: "活動の様子", href: "#gallery" },
-                      { name: "入会メリット", href: "#benefits" },
-                      { name: "よくある質問", href: "#faq" },
-                      { name: "アクセス", href: "#map" },
-                    ].map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)} // クリックしたら閉じる
-                        className="text-lg font-bold text-slate-800 hover:text-orange-700 py-4 border-b border-slate-100 last:border-0"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </nav>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Hero Section */}
       <section className="relative py-24">
         {/* コンテンツ */}
@@ -934,47 +777,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-blue-950 text-white pt-8 pb-20 md:pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="text-lg font-semibold mb-4">東岸町自治会</h4>
-              <p className="text-slate-300">地域の安全と快適な生活のために</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">連絡先</h4>
-              <p className="text-slate-300">
-                メール: <a href="mailto:urawa.higashikishi@gmail.com" className="hover:text-white underline">urawa.higashikishi@gmail.com</a>
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">リンク</h4>
-              <ul className="text-slate-300 space-y-1">
-                <li><Link href="/privacy" className="hover:text-white">プライバシーポリシー</Link></li>
-                <li><a href="https://www.city.saitama.lg.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-white">さいたま市公式サイト</a></li>
-                <li><a href="https://u-jichiren.ciao.jp/" target="_blank" rel="noopener noreferrer" className="hover:text-white">浦和区自治会連合会</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-slate-700 text-center text-slate-300">
-            <p>&copy; 2026 東岸町自治会. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-      {/* スクロールトップボタン */}
-      {showTop && (
-        <button
-          onClick={scrollToTop}
-          aria-label="ページ上部へ戻る"
-          className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex h-11 w-11 md:h-auto md:w-auto flex-col items-center justify-center bg-white/90 backdrop-blur-sm border border-orange-200 md:p-3 rounded-full md:rounded-2xl shadow-lg md:shadow-xl hover:bg-white transition-all group"
-        >
-          <div className="text-orange-500 md:mb-1 group-hover:-translate-y-1 transition-transform">
-            <ChevronDown size={20} className="rotate-180" />
-          </div>
-          <span className="hidden md:block text-[10px] font-black text-orange-600 tracking-tighter">PAGE TOP</span>
-        </button>
-      )}
-    </div>
+    </>
   );
 }
